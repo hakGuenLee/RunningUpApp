@@ -32,6 +32,7 @@
         <activity android:name=".GrantActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".PaceActivity" />
+        <activity android:name=".RunActivity" />
     </application>
 
 </manifest>
