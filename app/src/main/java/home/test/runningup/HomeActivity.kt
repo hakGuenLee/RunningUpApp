@@ -1,5 +1,6 @@
 package home.test.runningup
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import home.test.runningup.databinding.HomePageBinding
@@ -12,6 +13,12 @@ class HomeActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = HomePageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        binding.runStartBtn.setOnClickListener {
+           val intent = Intent(this, PaceActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 

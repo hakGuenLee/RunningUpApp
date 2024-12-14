@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".PaceActivity"
+    >
+
+    <!-- 가이드라인 -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <TextView
+        android:layout_width="230dp"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:textColor="#ff59D286"
+        android:text="페이스를\n 선택하세요!"
+        android:textSize="35sp"
+        android:fontFamily="@font/scdream_bold"
+        android:gravity="center_horizontal|top"
+        android:alpha="1"
+        app:layout_constraintTop_toBottomOf="@id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/btnline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <LinearLayout
+        android:id="@+id/slow_pace_btn"
+        android:layout_width="304dp"
+        android:layout_height="98dp"
+        android:background="@drawable/pace_btn"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/btnline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <TextView
+            android:id="@+id/slow_pace_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="천천히"
+            android:textColor="#ffFFFFFF"
+            android:textSize="28sp"
+            android:fontFamily="@font/scdream_extrabold"
+             />
+
+        <TextView
+            android:id="@+id/slow_pace_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9~10분/km"
+            android:textColor="#ffFFFFFF"
+            android:textSize="20sp"
+            android:fontFamily="@font/scdream_light"
+            />
+
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/secondBtnline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <LinearLayout
+        android:id="@+id/regular_pace_btn"
+        android:layout_width="304dp"
+        android:layout_height="98dp"
+        android:background="@drawable/pace_btn"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/secondBtnline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <TextView
+            android:id="@+id/regular_pace_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="조금 빠르게"
+            android:textColor="#ffFFFFFF"
+            android:textSize="28sp"
+            android:fontFamily="@font/scdream_extrabold"
+            />
+
+        <TextView
+            android:id="@+id/regular_pace_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7~8분/km"
+            android:textColor="#ffFFFFFF"
+            android:textSize="20sp"
+            android:fontFamily="@font/scdream_light"
+            />
+
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/thirdBtnline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.65" />
+
+    <LinearLayout
+        android:id="@+id/fast_pace_btn"
+        android:layout_width="304dp"
+        android:layout_height="98dp"
+        android:background="@drawable/pace_btn"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/thirdBtnline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <TextView
+            android:id="@+id/fast_pace_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="빠르게"
+            android:textColor="#ffFFFFFF"
+            android:textSize="28sp"
+            android:fontFamily="@font/scdream_extrabold"
+            />
+
+        <TextView
+            android:id="@+id/fast_pace_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5~6분/km"
+            android:textColor="#ffFFFFFF"
+            android:textSize="20sp"
+            android:fontFamily="@font/scdream_light"
+            />
+
+
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/confirm_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.83" />
+
+
+
+    <LinearLayout
+        android:id="@+id/confirm_btn"
+        android:layout_width="180dp"
+        android:layout_height="80dp"
+        android:background="@drawable/pace_btn"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/confirm_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        >
+
+        <TextView
+            android:id="@+id/confirm_btn_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="확인"
+            android:textColor="#ffFFFFFF"
+            android:textSize="26sp"
+            android:fontFamily="@font/scdream_extrabold"
+            />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
