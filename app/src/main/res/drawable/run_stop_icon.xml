@@ -1,0 +1,21 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="86dp"
+    android:height="86dp"
+    android:viewportWidth="86"
+    android:viewportHeight="86">
+
+  <!-- 첫 번째 벡터 (배경 원) -->
+  <path
+      android:pathData="M0,43a43,43 0,1 0,86 0a43,43 0,1 0,-86 0z"
+      android:fillColor="#CB4343"/>
+
+  <!-- 두 번째 벡터 (내부 아이콘) -->
+  <group
+      android:translateX="28"
+      android:translateY="28.5">
+    <path
+        android:pathData="M5,0L25,0A5,5 0,0 1,30 5L30,24A5,5 0,0 1,25 29L5,29A5,5 0,0 1,0 24L0,5A5,5 0,0 1,5 0z"
+        android:fillColor="#F2F2F2"/>
+  </group>
+
+</vector>

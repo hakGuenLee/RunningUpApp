@@ -1,0 +1,21 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="86dp"
+    android:height="86dp"
+    android:viewportWidth="86"
+    android:viewportHeight="86">
+
+  <!-- 첫 번째 벡터 (배경 원) -->
+  <path
+      android:pathData="M0,43a43,43 0,1 0,86 0a43,43 0,1 0,-86 0z"
+      android:fillColor="#17D074"/>
+
+  <!-- 두 번째 벡터 (배경 원 위에 위치할 삼각형) -->
+  <group
+      android:translateX="27"
+      android:translateY="27">
+    <path
+        android:pathData="M32,16L8,29.856L8,2.144L32,16Z"
+        android:fillColor="#F2F2F2"/>
+  </group>
+
+</vector>

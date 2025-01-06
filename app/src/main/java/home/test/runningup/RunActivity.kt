@@ -15,7 +15,6 @@ class RunActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val minVolume = intent?.getIntExtra("minVolume", 0)
-        binding.textView4.text = minVolume.toString()
 
 
     }
