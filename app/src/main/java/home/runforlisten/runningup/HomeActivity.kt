@@ -1,9 +1,9 @@
-package home.test.runningup
+package home.runforlisten.runningup
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import home.test.runningup.databinding.HomePageBinding
+import home.runforlisten.runningup.databinding.HomePageBinding
 
 class HomeActivity: AppCompatActivity() {
 

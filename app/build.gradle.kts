@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "home.test.runningup"
+    namespace = "home.runforlisten.runningup"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "home.test.runningup"
+        applicationId = "home.runforlisten.runningup"
         minSdk = 23
         targetSdk = 34
         versionCode = 1
@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation("androidx.viewpager2:viewpager2:1.1.0")
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)

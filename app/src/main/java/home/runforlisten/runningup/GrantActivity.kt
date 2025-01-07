@@ -1,8 +1,8 @@
-package home.test.runningup
+package home.runforlisten.runningup
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import home.test.runningup.databinding.GrantPageBinding
+import home.runforlisten.runningup.databinding.GrantPageBinding
 
 class GrantActivity : AppCompatActivity() {
 

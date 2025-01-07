@@ -1,4 +1,4 @@
-package home.test.runningup
+package home.runforlisten.runningup
 
 
 import android.animation.ObjectAnimator
@@ -7,9 +7,8 @@ import android.os.Bundle
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
-import home.test.runningup.databinding.PaceSelectBinding
+import home.runforlisten.runningup.databinding.PaceSelectBinding
 
 class PaceActivity : AppCompatActivity() {
 

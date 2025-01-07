@@ -1,8 +1,8 @@
-package home.test.runningup
+package home.runforlisten.runningup
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import home.test.runningup.databinding.ActivityMainBinding
+import home.runforlisten.runningup.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,8 +1,9 @@
-package home.test.runningup
+package home.runforlisten.runningup
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import home.test.runningup.databinding.RunningupMainBinding
+import androidx.viewpager2.widget.ViewPager2
+import home.runforlisten.runningup.databinding.RunningupMainBinding
 
 //메인화면 엑티비티
 class RunActivity : AppCompatActivity() {
@@ -13,6 +14,8 @@ class RunActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = RunningupMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val viewPager : ViewPager2 = binding.viewPager
 
         val minVolume = intent?.getIntExtra("minVolume", 0)
 
