@@ -1,5 +1,6 @@
 package home.runforlisten.runningup
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -18,12 +19,19 @@ class RunActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val targetPace = intent.getDoubleExtra("maxpace", 0.0)
+        val targetPace2 = intent.getDoubleExtra("minpace", 0.0)
         val maxVolume = intent.getIntExtra("maxVolume", 0)
+        val minVolume = intent.getIntExtra("minVolume", 0)
+
+        // 서비스에 페이스와 맥스볼륨 값을 전달
+        val serviceIntent = Intent(this, MainService::class.java)
+        serviceIntent.putExtra("maxpace", targetPace)
+        serviceIntent.putExtra("minpace", targetPace2)
+        serviceIntent.putExtra("maxVolume", maxVolume)
+        serviceIntent.putExtra("minVolume", minVolume)
+        startService(serviceIntent)
 
        val viewPager: ViewPager2 = binding.viewPager
-
-
-        println(targetPace)
 
         // 화면 스와이프 처리
         val adapter = object : FragmentStateAdapter(this) {
