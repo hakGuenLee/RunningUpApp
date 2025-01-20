@@ -103,6 +103,7 @@
         app:layout_constraintGuide_percent="0.23" />
 
     <TextView
+        android:id="@+id/targetPace"
         android:layout_width="180dp"
         android:layout_height="30dp"
         android:text="00'00 /km"
