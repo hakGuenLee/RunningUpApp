@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.09" />
+        app:layout_constraintGuide_percent="0.06" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -78,7 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.19" />
+        app:layout_constraintGuide_percent="0.15" />
 
     <TextView
         android:id="@+id/maxVolume"
@@ -101,7 +101,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.23" />
+        app:layout_constraintGuide_percent="0.19" />
 
     <TextView
         android:id="@+id/targetPace"
@@ -118,6 +118,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/volume_bar_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+
+    <RelativeLayout
+        android:layout_width="86dp"
+        android:layout_height="410dp"
+        android:orientation="horizontal"
+        android:background="@drawable/main_volme_bar"
+        app:layout_constraintTop_toBottomOf="@id/volume_bar_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
 
 
     <!--하단 버튼 가이드라인-->
@@ -126,7 +145,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="0.83" />
 
     <RelativeLayout
         android:layout_width="match_parent"

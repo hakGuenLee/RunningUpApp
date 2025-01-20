@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#00ACACAC"/> <!-- 내부 색상 -->
+    <corners android:radius="56dp"/> <!-- 모서리 둥글기 -->
+    <stroke android:width="5dp" android:color="#ff59D286" />
+</shape>
