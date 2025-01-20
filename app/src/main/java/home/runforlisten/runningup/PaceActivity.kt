@@ -141,49 +141,6 @@ class PaceActivity : AppCompatActivity() {
         return (distance / time) * 60
     }
 
-    private fun resetButtonAnimation(buttons: View) {
-            if(buttons == binding.slowPaceBtn){
-
-                // 각 버튼에 대해 ObjectAnimator로 애니메이션을 되돌리기
-                val slideInRegular = ObjectAnimator.ofFloat(binding.regularPaceBtn, "translationX", 0f)
-                val slideInFast = ObjectAnimator.ofFloat(binding.fastPaceBtn, "translationX", 0f)
-
-                // 애니메이션 시간 설정
-                slideInRegular.duration = 200
-                slideInFast.duration = 200
-
-                // 애니메이션 시작
-                slideInRegular.start()
-                slideInFast.start()
-            }else if(buttons == binding.fastPaceBtn){
-
-                // 각 버튼에 대해 ObjectAnimator로 애니메이션을 되돌리기
-                val slideInRegular = ObjectAnimator.ofFloat(binding.regularPaceBtn, "translationX", 0f)
-                val slideInSlow = ObjectAnimator.ofFloat(binding.slowPaceBtn, "translationX", 0f)
-
-                // 애니메이션 시간 설정
-                slideInRegular.duration = 200
-                slideInSlow.duration = 200
-
-                // 애니메이션 시작
-                slideInRegular.start()
-                slideInSlow.start()
-            }else if(buttons == binding.regularPaceBtn){
-
-                // 각 버튼에 대해 ObjectAnimator로 애니메이션을 되돌리기
-                val slideInFast = ObjectAnimator.ofFloat(binding.fastPaceBtn, "translationX", 0f)
-                val slideInSlow = ObjectAnimator.ofFloat(binding.slowPaceBtn, "translationX", 0f)
-
-                // 애니메이션 시간 설정
-                slideInFast.duration = 200
-                slideInSlow.duration = 200
-
-                // 애니메이션 시작
-                slideInFast.start()
-                slideInSlow.start()
-
-            }
-    }
 
     // SeekBar 리스너 설정 공통화
     private fun setupSeekBar(seekBar: SeekBar, onProgressChanged: (Int) -> Unit) {

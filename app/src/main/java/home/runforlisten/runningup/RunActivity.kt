@@ -1,14 +1,10 @@
 package home.runforlisten.runningup
 
 import android.os.Bundle
-import android.view.GestureDetector
-import android.view.MotionEvent
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import home.runforlisten.runningup.databinding.MainFragment1Binding
 import home.runforlisten.runningup.databinding.RunningupMainBinding
 
 // 메인화면 엑티비티
@@ -21,9 +17,12 @@ class RunActivity : AppCompatActivity() {
         binding = RunningupMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val targetPace = intent.getDoubleExtra("maxpace", 0.0)
+        val maxVolume = intent.getIntExtra("maxVolume", 0)
+
        val viewPager: ViewPager2 = binding.viewPager
 
-        val targetPace = intent.getDoubleExtra("pace", 0.0)
+
         println(targetPace)
 
         // 화면 스와이프 처리
@@ -32,7 +31,7 @@ class RunActivity : AppCompatActivity() {
                 // 위치에 따라 다른 Fragment를 반환
                 return when (position) {
                     0 -> MainFragment3()
-                    1 -> MainFragment1()
+                    1 -> MainFragment1.newInstance(targetPace,maxVolume)
                     2 -> MainFragment2()
                     else -> throw IllegalArgumentException("Invalid position")
                 }

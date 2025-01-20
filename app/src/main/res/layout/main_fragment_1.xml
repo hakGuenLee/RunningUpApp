@@ -81,6 +81,7 @@
         app:layout_constraintGuide_percent="0.19" />
 
     <TextView
+        android:id="@+id/maxVolume"
         android:layout_width="180dp"
         android:layout_height="30dp"
         android:text="Max Volume : 100"
