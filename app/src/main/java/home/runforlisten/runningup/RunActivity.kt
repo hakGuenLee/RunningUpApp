@@ -23,14 +23,6 @@ class RunActivity : AppCompatActivity() {
         val maxVolume = intent.getIntExtra("maxVolume", 0)
         val minVolume = intent.getIntExtra("minVolume", 0)
 
-        // 서비스에 페이스와 맥스볼륨 값을 전달
-        val serviceIntent = Intent(this, MainService::class.java)
-        serviceIntent.putExtra("maxpace", targetPace)
-        serviceIntent.putExtra("minpace", targetPace2)
-        serviceIntent.putExtra("maxVolume", maxVolume)
-        serviceIntent.putExtra("minVolume", minVolume)
-        startService(serviceIntent)
-
        val viewPager: ViewPager2 = binding.viewPager
 
         // 화면 스와이프 처리
@@ -39,7 +31,7 @@ class RunActivity : AppCompatActivity() {
                 // 위치에 따라 다른 Fragment를 반환
                 return when (position) {
                     0 -> MainFragment3()
-                    1 -> MainFragment1.newInstance(targetPace,maxVolume)
+                    1 -> MainFragment1.newInstance(targetPace,targetPace2,maxVolume,minVolume)
                     2 -> MainFragment2()
                     else -> throw IllegalArgumentException("Invalid position")
                 }
