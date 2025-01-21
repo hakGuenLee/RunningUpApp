@@ -1,19 +1,32 @@
 package home.runforlisten.runningup
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import home.runforlisten.runningup.databinding.MainFragment1Binding
 
 class MainFragment1 : Fragment(R.layout.main_fragment_1), TimeHandler.TimerCallback {
 
     private lateinit var binding: MainFragment1Binding
     private var timeHandler : TimeHandler? = null
+    private var totalDistance = 0.0 // 총 이동 거리
     private var runningStatus = " "
 
+
+    private val distanceReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            // 이동 거리를 받아서 업데이트
+            totalDistance = intent.getDoubleExtra("distance", 0.0)
+            updateDistanceUI()
+        }
+    }
 
     //생성자
     companion object {
@@ -21,6 +34,8 @@ class MainFragment1 : Fragment(R.layout.main_fragment_1), TimeHandler.TimerCallb
         private const val TARGET_PACE_KEY2 = "minPace"
         private const val MAX_VOLUME_VALUE = "maxVolume"
         private const val MIN_VOLUME_VALUE = "minVolume"
+
+
 
         // Fragment를 생성하면서 targetPace를 arguments로 전달하는 메서드
         fun newInstance(targetPace: Double, targetPace2:Double, maxVolume: Int, minVolume: Int): MainFragment1 {
@@ -61,6 +76,9 @@ class MainFragment1 : Fragment(R.layout.main_fragment_1), TimeHandler.TimerCallb
         binding.startBtn.setOnClickListener {
 
             startService(maxPace, minPace, maxVolume, minVolume)
+            LocalBroadcastManager.getInstance(requireContext()).registerReceiver(
+                distanceReceiver, IntentFilter("ACTION_DISTANCE_UPDATED")
+            )
 
             timeHandler!!.startTimer()
 
@@ -69,11 +87,22 @@ class MainFragment1 : Fragment(R.layout.main_fragment_1), TimeHandler.TimerCallb
         binding.stopBtn.setOnClickListener {
 
             timeHandler!!.stopAllTimer()
+
+            requireContext().stopService(Intent(requireContext(), MainService::class.java))
+            binding.distance.text = "0.0"
+
+            // 브로드캐스트 리시버 해제
+            LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(distanceReceiver)
+
         }
 
 
 
 
+    }
+
+    private fun updateDistanceUI() {
+        binding.distance.text = "${"%.2f".format(totalDistance / 1000)}"
     }
 
     // 서비스에 페이스와 맥스볼륨 값을 전달
