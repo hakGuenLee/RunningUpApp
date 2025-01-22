@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import home.runforlisten.runningup.databinding.MainFragment1Binding
@@ -17,7 +18,6 @@ class MainFragment1 : Fragment(R.layout.main_fragment_1), TimeHandler.TimerCallb
     private lateinit var binding: MainFragment1Binding
     private var timeHandler : TimeHandler? = null
     private var totalDistance = 0.0 // 총 이동 거리
-
 
 
     private val distanceReceiver = object : BroadcastReceiver() {
@@ -76,12 +76,13 @@ class MainFragment1 : Fragment(R.layout.main_fragment_1), TimeHandler.TimerCallb
         //시작 버튼을 눌렀을 때 서비스 시작
         binding.startBtn.setOnClickListener {
 
+
             startService(maxPace, minPace, maxVolume, minVolume)
             LocalBroadcastManager.getInstance(requireContext()).registerReceiver(
                 distanceReceiver, IntentFilter("ACTION_DISTANCE_UPDATED")
             )
-
             timeHandler!!.startTimer()
+
 
         }
 
