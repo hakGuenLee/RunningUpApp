@@ -17,14 +17,15 @@ class MainFragment1 : Fragment(R.layout.main_fragment_1), TimeHandler.TimerCallb
     private lateinit var binding: MainFragment1Binding
     private var timeHandler : TimeHandler? = null
     private var totalDistance = 0.0 // 총 이동 거리
-    private var runningStatus = " "
+
 
 
     private val distanceReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             // 이동 거리를 받아서 업데이트
             totalDistance = intent.getDoubleExtra("distance", 0.0)
-            updateDistanceUI()
+            var pace = intent.getStringExtra("pace")
+            uiUpdater(pace)
         }
     }
 
@@ -101,8 +102,10 @@ class MainFragment1 : Fragment(R.layout.main_fragment_1), TimeHandler.TimerCallb
 
     }
 
-    private fun updateDistanceUI() {
+    //서비스단에서 넘어오는 값들을 화면에 뿌리는 메서드
+    private fun uiUpdater(pace: String?) {
         binding.distance.text = "${"%.2f".format(totalDistance / 1000)}"
+        binding.paceStatusText.text = "$pace"
     }
 
     // 서비스에 페이스와 맥스볼륨 값을 전달

@@ -69,6 +69,10 @@ class MainService: Service(), LocationListener {
     }
 
     override fun onLocationChanged(location: Location) {
+
+        val speed = location.speed * 3.6f // m/s를 km/h로 변환
+        val pace = calculatePace(speed)
+
         if (previousLocation != null) {
             // 이전 위치와 현재 위치 사이의 거리 계산
             val distance = previousLocation!!.distanceTo(location).toDouble()
@@ -79,6 +83,7 @@ class MainService: Service(), LocationListener {
         // 이동 거리 정보를 프래그먼트로 전달하기 위한 브로드캐스트
         val intent = Intent("ACTION_DISTANCE_UPDATED")
         intent.putExtra("distance", totalDistance)
+        intent.putExtra("pace", pace) //측정되는 페이스를 넘김
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
     }
 
@@ -95,6 +100,20 @@ class MainService: Service(), LocationListener {
 
     private fun stopLocationUpdates() {
         locationManager.removeUpdates(this)  // 위치 업데이트 중지
+    }
+
+
+    //페이스 계산 메서드
+    private fun calculatePace(speed: Float): String {
+        return if (speed > 0) {
+            // km/h를 min/km로 변환
+            val paceInMinutes = 60 / speed // 시간당 거리에서 페이스를 계산
+            val minutes = paceInMinutes.toInt()
+            val seconds = ((paceInMinutes - minutes) * 60).toInt()
+            String.format("%02d:%02d", minutes, seconds)
+        } else {
+            "00'00''/km" // 정지 상태
+        }
     }
     
     //포그라운드 서비스 시작
