@@ -25,7 +25,8 @@ class MainFragment1 : Fragment(R.layout.main_fragment_1), TimeHandler.TimerCallb
             // 이동 거리를 받아서 업데이트
             totalDistance = intent.getDoubleExtra("distance", 0.0)
             var pace = intent.getStringExtra("pace")
-            uiUpdater(pace)
+            var currentVolume = intent.getIntExtra("currentVolume",0)
+            uiUpdater(pace,currentVolume)
         }
     }
 
@@ -104,9 +105,10 @@ class MainFragment1 : Fragment(R.layout.main_fragment_1), TimeHandler.TimerCallb
     }
 
     //서비스단에서 넘어오는 값들을 화면에 뿌리는 메서드
-    private fun uiUpdater(pace: String?) {
+    private fun uiUpdater(pace: String?, currentVolume: Int) {
         binding.distance.text = "${"%.2f".format(totalDistance / 1000)}"
         binding.paceStatusText.text = "$pace"
+        binding.volumeStatus.text = "$currentVolume"
     }
 
     // 서비스에 페이스와 맥스볼륨 값을 전달

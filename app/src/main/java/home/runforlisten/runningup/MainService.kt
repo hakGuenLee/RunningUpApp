@@ -22,12 +22,13 @@ class MainService: Service(), LocationListener {
 
     private lateinit var locationManager: LocationManager
     private lateinit var audioManager: AudioManager
+    private lateinit var volumeHandler: VolumeHandler
     private var previousLocation: Location? = null
     private var totalDistance = 0.0 // 이동한 총 거리
-    private var targetPace: Double = 0.0
-    private var targetPace2: Double = 0.0
-    private var maxVolume: Int = 0
-    private var minVolume: Int = 0
+    private var targetPace: Double = 0.0 //타겟페이스 최대값
+    private var targetPace2: Double = 0.0 //타겟페이스 최소값
+    private var maxVolume: Int = 0 //최대볼륨
+    private var minVolume: Int = 0 //최소볼륨
 
     private val CHANNEL_ID = "MainServiceChannel"
 
@@ -35,6 +36,7 @@ class MainService: Service(), LocationListener {
         super.onCreate()
         locationManager = getSystemService(LOCATION_SERVICE) as LocationManager
         audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
+        volumeHandler = VolumeHandler(this)
 
     }
 
@@ -102,6 +104,7 @@ class MainService: Service(), LocationListener {
     override fun onLocationChanged(location: Location) {
 
         val speed = location.speed * 3.6f // m/s를 km/h로 변환
+        val currentVolume = volumeHandler.volumeChanger(speed,targetPace, targetPace2, maxVolume, minVolume)
         val pace = calculatePace(speed)
 
         if (previousLocation != null) {
@@ -115,6 +118,7 @@ class MainService: Service(), LocationListener {
         val intent = Intent("ACTION_DISTANCE_UPDATED")
         intent.putExtra("distance", totalDistance)
         intent.putExtra("pace", pace) //측정되는 페이스를 넘김
+        intent.putExtra("currentVolume",currentVolume)
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
     }
     
