@@ -14,6 +14,7 @@ import home.runforlisten.runningup.databinding.PaceSelectBinding
 class PaceActivity : AppCompatActivity() {
 
     private lateinit var binding: PaceSelectBinding
+    private lateinit var volumeHandler: VolumeHandler
 
     var maxpace = 0 //페이스 선택 값 1
     var minpace = 0 //페이스 선택 값 2
@@ -30,6 +31,8 @@ class PaceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = PaceSelectBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        volumeHandler = VolumeHandler(this)
 
         // 예시 데이터: 10분에 1km를 달림
 //        val timeInMinutes = 10 // 시간 (분)
@@ -124,14 +127,14 @@ class PaceActivity : AppCompatActivity() {
         }
 
         // SeekBar의 값을 실시간으로 업데이트
-        setupSeekBar(binding.slowPaceMinVolume) { minVolume = it }
-        setupSeekBar(binding.slowPaceMaxVolume) { maxVolume = it }
+        setupSeekBar(binding.slowPaceMinVolume) { minVolume = it; volumeHandler.setVolume(it) }
+        setupSeekBar(binding.slowPaceMaxVolume) { maxVolume = it; volumeHandler.setVolume(it) }
 
-        setupSeekBar(binding.regularPaceMinVolume) { minVolume = it }
-        setupSeekBar(binding.regularPaceMaxVolume) { maxVolume = it }
+        setupSeekBar(binding.regularPaceMinVolume) { minVolume = it; volumeHandler.setVolume(it) }
+        setupSeekBar(binding.regularPaceMaxVolume) { maxVolume = it; volumeHandler.setVolume(it) }
 
-        setupSeekBar(binding.fastPaceMinVolume) { minVolume = it }
-        setupSeekBar(binding.fastPaceMaxVolume) { maxVolume = it }
+        setupSeekBar(binding.fastPaceMinVolume) { minVolume = it; volumeHandler.setVolume(it) }
+        setupSeekBar(binding.fastPaceMaxVolume) { maxVolume = it; volumeHandler.setVolume(it) }
 
     }
 
