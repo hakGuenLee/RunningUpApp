@@ -18,13 +18,26 @@ class VolumeHandler(context: Context) {
     }
 
 
-    fun volumeChanger(speed: Float, maxPace: Double, minPace: Double, maxVolume: Int, minVolume: Int
-    ): Int {
-        var currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+    fun volumeChanger(pace: String, maxPace: Int, minPace: Int, maxVolume: Int, minVolume: Int): Int {
 
-        // speed가 minPace와 maxPace 사이에 있을 경우, maxVolume으로 설정
+        //현재 볼륨
+        val currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+
+        val maxSpeed = 60.0 / maxPace  // maxPace를 km/h로 변환
+        val minSpeed = 60.0 / minPace  // minPace를 km/h로 변환
+
+        // pace를 km/h로 변환하려면 pace를 분/km로 생각하고, 이를 속도로 바꿔야 함
+        val paceInMinutesPerKm = pace.split(":")
+        val paceInMinutes = paceInMinutesPerKm[0].toInt()
+        val paceInSeconds = paceInMinutesPerKm[1].toInt()
+
+        // pace를 km/h로 변환 (분/킬로미터 -> km/h)
+        val paceInKmPerH = 60.0 / (paceInMinutes + paceInSeconds / 60.0)
+
+        // 목표 볼륨 계산
         val targetVolume = when {
-            speed in minPace..maxPace -> maxVolume  // 속도가 minPace와 maxPace 사이일 때
+            paceInKmPerH >= minSpeed && paceInKmPerH <= maxSpeed -> maxVolume  // pace가 minSpeed와 maxSpeed 사이에 있을 때
+            paceInKmPerH > maxSpeed -> maxVolume // pace가 maxSpeed보다 빠를 때
             else -> minVolume  // 그 외의 경우에는 minVolume
         }
 
@@ -51,17 +64,18 @@ class VolumeHandler(context: Context) {
             handler.post(runnable)
         }
 
-        // 0~100 범위로 변환된 targetVolume을 반환
-        return scaledTargetVolume.toInt()
+        // 변경된 currentVolume 값을 리턴
+        return currentVolume
     }
+
 
 
     // 현재 볼륨을 0~100 사이로 반환하는 함수
-    fun getCurrentVolumePercentage(): Int {
-        val currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
-        val maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
-        return ((currentVolume / maxVolume.toFloat()) * 100).toInt()
-    }
+//    fun getCurrentVolumePercentage(): Int {
+//        val currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+//        val maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+//        return ((currentVolume / maxVolume.toFloat()) * 100).toInt()
+//    }
 
 
 

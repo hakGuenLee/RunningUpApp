@@ -18,10 +18,13 @@ class RunActivity : AppCompatActivity() {
         binding = RunningupMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val targetPace = intent.getDoubleExtra("maxpace", 0.0)
-        val targetPace2 = intent.getDoubleExtra("minpace", 0.0)
+        val targetPace = intent.getIntExtra("maxpace", 0)
+        val targetPace2 = intent.getIntExtra("minpace", 0)
         val maxVolume = intent.getIntExtra("maxVolume", 0)
         val minVolume = intent.getIntExtra("minVolume", 0)
+
+        println(targetPace)
+
 
        val viewPager: ViewPager2 = binding.viewPager
 

@@ -40,11 +40,11 @@ class MainFragment1 : Fragment(R.layout.main_fragment_1), TimeHandler.TimerCallb
 
 
         // Fragment를 생성하면서 targetPace를 arguments로 전달하는 메서드
-        fun newInstance(targetPace: Double, targetPace2:Double, maxVolume: Int, minVolume: Int): MainFragment1 {
+        fun newInstance(targetPace: Int, targetPace2:Int, maxVolume: Int, minVolume: Int): MainFragment1 {
             val fragment = MainFragment1()
             val args = Bundle()
-            args.putDouble(TARGET_PACE_KEY, targetPace)
-            args.putDouble(TARGET_PACE_KEY2, targetPace2)
+            args.putInt(TARGET_PACE_KEY, targetPace)
+            args.putInt(TARGET_PACE_KEY2, targetPace2)
             args.putInt(MAX_VOLUME_VALUE, maxVolume)
             args.putInt(MIN_VOLUME_VALUE, minVolume)
             fragment.arguments = args
@@ -67,11 +67,11 @@ class MainFragment1 : Fragment(R.layout.main_fragment_1), TimeHandler.TimerCallb
         timeHandler = TimeHandler(this)
 
         // arguments에서 targetPace 값을 가져와서 텍스트로 출력
-        val maxPace = arguments?.getDouble(TARGET_PACE_KEY) ?: 0.0
-        val minPace = arguments?.getDouble(TARGET_PACE_KEY2) ?: 0.0
+        val maxPace = arguments?.getInt(TARGET_PACE_KEY) ?: 0
+        val minPace = arguments?.getInt(TARGET_PACE_KEY2) ?: 0
         val maxVolume = arguments?.getInt(MAX_VOLUME_VALUE) ?: 0
         val minVolume = arguments?.getInt(MIN_VOLUME_VALUE) ?: 0
-        binding.targetPace.text = "$maxPace /km"
+        binding.targetPace.text = "$maxPace 분 ~ $minPace 분 /km"
         binding.maxVolume.text = "Max Volume : $maxVolume"
         
         //시작 버튼을 눌렀을 때 서비스 시작
@@ -112,7 +112,7 @@ class MainFragment1 : Fragment(R.layout.main_fragment_1), TimeHandler.TimerCallb
     }
 
     // 서비스에 페이스와 맥스볼륨 값을 전달
-    private fun startService(targetPace: Double, targetPace2:Double, maxVolume: Int, minVolume: Int) {
+    private fun startService(targetPace: Int, targetPace2:Int, maxVolume: Int, minVolume: Int) {
         val serviceIntent = Intent(requireContext(), MainService::class.java)
         serviceIntent.putExtra("maxpace", targetPace)
         serviceIntent.putExtra("minpace", targetPace2) // 최소 페이스도 전달

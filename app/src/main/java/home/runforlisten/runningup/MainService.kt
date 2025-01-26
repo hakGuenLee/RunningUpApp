@@ -25,8 +25,8 @@ class MainService: Service(), LocationListener {
     private lateinit var volumeHandler: VolumeHandler
     private var previousLocation: Location? = null
     private var totalDistance = 0.0 // 이동한 총 거리
-    private var targetPace: Double = 0.0 //타겟페이스 최대값
-    private var targetPace2: Double = 0.0 //타겟페이스 최소값
+    private var targetPace: Int = 0 //타겟페이스 최대값
+    private var targetPace2: Int = 0 //타겟페이스 최소값
     private var maxVolume: Int = 0 //최대볼륨
     private var minVolume: Int = 0 //최소볼륨
 
@@ -67,8 +67,8 @@ class MainService: Service(), LocationListener {
         super.onStartCommand(intent, flags, startId)
 
         // Intent로 전달받은 데이터를 초기화
-        targetPace = intent.getDoubleExtra("maxpace", 0.0)
-        targetPace2 = intent.getDoubleExtra("minpace", 0.0)
+        targetPace = intent.getIntExtra("maxpace", 0)
+        targetPace2 = intent.getIntExtra("minpace", 0)
         maxVolume = intent.getIntExtra("maxVolume", 0)
         minVolume = intent.getIntExtra("minVolume", 0)
 
@@ -104,8 +104,9 @@ class MainService: Service(), LocationListener {
     override fun onLocationChanged(location: Location) {
 
         val speed = location.speed * 3.6f // m/s를 km/h로 변환
-        val currentVolume = volumeHandler.volumeChanger(speed,targetPace, targetPace2, maxVolume, minVolume)
+
         val pace = calculatePace(speed)
+        val currentVolume = volumeHandler.volumeChanger(pace,targetPace, targetPace2, maxVolume, minVolume)
 
         if (previousLocation != null) {
             // 이전 위치와 현재 위치 사이의 거리 계산
