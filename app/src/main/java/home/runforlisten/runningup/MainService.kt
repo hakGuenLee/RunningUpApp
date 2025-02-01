@@ -100,13 +100,16 @@ class MainService: Service(), LocationListener {
     }
 
 
-    //사용자의 이동을 감지하며 지속적으로 호출되는 메서드
+    //사용자의 이동을 감지하며 내부적으로 계속 호출되는 메서드
     override fun onLocationChanged(location: Location) {
 
         val speed = location.speed * 3.6f // m/s를 km/h로 변환
 
-        val pace = calculatePace(speed)
+        //현재 페이스 계산
+        val pace = calculatePace(location)
+        //볼륨 조절
         val currentVolume = volumeHandler.volumeChanger(pace,targetPace, targetPace2, maxVolume, minVolume)
+
 
         if (previousLocation != null) {
             // 이전 위치와 현재 위치 사이의 거리 계산
@@ -122,21 +125,40 @@ class MainService: Service(), LocationListener {
         intent.putExtra("currentVolume",currentVolume)
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
     }
-    
 
 
-    //페이스 계산 메서드
-    private fun calculatePace(speed: Float): String {
-        return if (speed > 0) {
-            // km/h를 min/km로 변환
-            val paceInMinutes = 60 / speed // 시간당 거리에서 페이스를 계산
-            val minutes = paceInMinutes.toInt()
-            val seconds = ((paceInMinutes - minutes) * 60).toInt()
-            String.format("%02d:%02d", minutes, seconds)
-        } else {
-            "00'00''/km" // 정지 상태
+
+    private fun calculatePace(location: Location): String {
+        // 이전 위치와 현재 위치 사이의 거리를 계산
+        if (previousLocation != null) {
+            // 현재 위치와 이전 위치 사이의 거리 (미터 단위)
+            val distanceInMeters = previousLocation!!.distanceTo(location)
+            totalDistance += distanceInMeters  // 총 거리 갱신
+
+            // 이동 시간 (초 단위)
+            val timeInSeconds = (location.time - previousLocation!!.time) / 1000.0
+
+            if (timeInSeconds > 0) {
+                // 이동한 거리를 킬로미터로 변환
+                val distanceInKm = totalDistance / 1000.0
+
+                // 이동 시간 (분)
+                val timeInMinutes = timeInSeconds / 60.0
+
+                // 페이스 계산: 시간당 1킬로미터를 주파하는 데 걸린 시간 (분/km)
+                val paceInMinutesPerKm = timeInMinutes / distanceInKm
+
+                // 페이스를 분/초로 변환
+                val minutes = paceInMinutesPerKm.toInt()
+                val seconds = ((paceInMinutesPerKm - minutes) * 60).toInt()
+
+                return String.format("%02d:%02d", minutes, seconds)
+            }
         }
+        // 초기에는 "00:00"을 반환 (페이스 계산 전)
+        return "00:00"
     }
+
 
 
 

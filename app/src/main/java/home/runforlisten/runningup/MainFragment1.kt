@@ -19,25 +19,12 @@ class MainFragment1 : Fragment(R.layout.main_fragment_1), TimeHandler.TimerCallb
     private var timeHandler : TimeHandler? = null
     private var totalDistance = 0.0 // 총 이동 거리
 
-
-    private val distanceReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            // 이동 거리를 받아서 업데이트
-            totalDistance = intent.getDoubleExtra("distance", 0.0)
-            var pace = intent.getStringExtra("pace")
-            var currentVolume = intent.getIntExtra("currentVolume",0)
-            uiUpdater(pace,currentVolume)
-        }
-    }
-
     //생성자
     companion object {
         private const val TARGET_PACE_KEY = "maxPace"
         private const val TARGET_PACE_KEY2 = "minPace"
         private const val MAX_VOLUME_VALUE = "maxVolume"
         private const val MIN_VOLUME_VALUE = "minVolume"
-
-
 
         // Fragment를 생성하면서 targetPace를 arguments로 전달하는 메서드
         fun newInstance(targetPace: Int, targetPace2:Int, maxVolume: Int, minVolume: Int): MainFragment1 {
@@ -49,6 +36,17 @@ class MainFragment1 : Fragment(R.layout.main_fragment_1), TimeHandler.TimerCallb
             args.putInt(MIN_VOLUME_VALUE, minVolume)
             fragment.arguments = args
             return fragment
+        }
+    }
+
+    //MainService와 상호작용 하면서, 서비스단에서 넘어오는 값으로 ui 수정
+    private val distanceReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+
+            totalDistance = intent.getDoubleExtra("distance", 0.0)
+            var pace = intent.getStringExtra("pace")
+            var currentVolume = intent.getIntExtra("currentVolume",0)
+            uiUpdater(pace,currentVolume)
         }
     }
 
@@ -64,6 +62,7 @@ class MainFragment1 : Fragment(R.layout.main_fragment_1), TimeHandler.TimerCallb
         super.onViewCreated(view, savedInstanceState)
         binding = MainFragment1Binding.bind(view)
 
+        //타이머 객체
         timeHandler = TimeHandler(this)
 
         // arguments에서 targetPace 값을 가져와서 텍스트로 출력
@@ -77,7 +76,7 @@ class MainFragment1 : Fragment(R.layout.main_fragment_1), TimeHandler.TimerCallb
         //시작 버튼을 눌렀을 때 서비스 시작
         binding.startBtn.setOnClickListener {
 
-
+            //서비스 시작
             startService(maxPace, minPace, maxVolume, minVolume)
             LocalBroadcastManager.getInstance(requireContext()).registerReceiver(
                 distanceReceiver, IntentFilter("ACTION_DISTANCE_UPDATED")

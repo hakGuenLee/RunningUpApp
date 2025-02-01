@@ -17,10 +17,12 @@ class PaceActivity : AppCompatActivity() {
     private lateinit var binding: PaceSelectBinding
     private lateinit var volumeHandler: VolumeHandler
 
-    var maxpace = 0 //페이스 선택 값 1
-    var minpace = 0 //페이스 선택 값 2
-//    var realMaxPace = 0.0 // 실제 페이스 값 1
-//    var realMinPace = 0.0 // 실제 페이스 값 2
+    //5~6km/1분의 방식으로 작동하기 때문에, 각각 선택한 메뉴마다 두개의 값을 설정
+    var maxpace = 0 //목표 최대 페이스
+    var minpace = 0 //목표 최소 페이스
+
+    //사용자가 설정하는 최대 볼륨(목표 페이스 범위에 실제 페이스가 도달했을 때 조정할 볼륨값)
+    // 최소 볼륨(목표 페이스보다 떨어질 때 볼륨도 해당 값으로 떨어뜨림)
     var minVolume = 0 // 최소 볼륨 값
     var maxVolume = 0 // 최대 볼륨 값
     val distance = 1.0 // 거리(킬로미터)
@@ -60,81 +62,83 @@ class PaceActivity : AppCompatActivity() {
 
         volumeHandler = VolumeHandler(this)
 
-        // 예시 데이터: 10분에 1km를 달림
-//        val timeInMinutes = 10 // 시간 (분)
-//        val distanceInKilometers = 1.0 // 거리 (킬로미터)
-
-        // 속도 계산 (km/h 단위)
-//        val speedInKmPerHour = calculateSpeed(distanceInKilometers, timeInMinutes)
-        //천천히 버튼 클릭 : 9~10분
+        //천천히 버튼 클릭 : 9~10분/1km
         binding.slowPaceBtn.setOnClickListener {
 
+
+            //애니메이션 처리 설정
             val slideOut = ObjectAnimator.ofFloat(binding.slowPaceBtn, "translationX", 1000f) // 1000f만큼 오른쪽으로 이동
             val slideInRegular = ObjectAnimator.ofFloat(binding.regularPaceBtn, "translationX", 0f)
             val slideInFast = ObjectAnimator.ofFloat(binding.fastPaceBtn, "translationX", 0f)
-//            resetButtonAnimation(binding.slowPaceBtn)
-            maxpace = 10
-            minpace = 9
-//            realMaxPace = calculateSpeed(distance, maxpace)
-//            realMinPace = calculateSpeed(distance, minpace)
-
-            slideOut.duration = 200 // 애니메이션 시간
+            slideOut.duration = 200
             slideInRegular.duration = 200
             slideInFast.duration = 200
+
+            //애니메이션 시작
             slideOut.start()
             slideInRegular.start()
             slideInFast.start()
 
+            //볼륨 선택 화면 보이기
             binding.slowPaceVolumeBtn.isVisible = true
             binding.regularPaceVolumeBtn.isVisible = false
             binding.fastPaceVolumeBtn.isVisible = false
 
+            //페이스 값 할당
+            maxpace = 9
+            minpace = 10
+
         }
 
-        //조금 빠르게 버튼 클릭 : 7~8분
+        //조금 빠르게 버튼 클릭 : 7~8분/1km
         binding.regularPaceBtn.setOnClickListener {
-//            resetButtonAnimation(binding.regularPaceBtn)
+
+            //애니메이션 처리 설정
             val slideOut = ObjectAnimator.ofFloat(binding.regularPaceBtn, "translationX", 1000f)
             val slideInSlow = ObjectAnimator.ofFloat(binding.slowPaceBtn, "translationX", 0f)
             val slideInFast = ObjectAnimator.ofFloat(binding.fastPaceBtn, "translationX", 0f)
-            maxpace = 8
-            minpace = 7
-//            realMaxPace = calculateSpeed(distance, maxpace)
-//            realMinPace = calculateSpeed(distance, minpace)
-
             slideOut.duration = 200
             slideInSlow.duration = 200
             slideInFast.duration = 200
+
+            //애니메이션 시작
             slideOut.start()
             slideInSlow.start()
             slideInFast.start()
+
+            //볼륨 선택 화면 보이기
             binding.regularPaceVolumeBtn.isVisible = true
             binding.slowPaceVolumeBtn.isVisible = false
             binding.fastPaceVolumeBtn.isVisible = false
+
+            //페이스 값 할당
+            maxpace = 7
+            minpace = 8
 
         }
 
         //빠르게 버튼 클릭 : 5~6분
         binding.fastPaceBtn.setOnClickListener {
-//            resetButtonAnimation(binding.fastPaceBtn)
+
+            //애니메이션 처리 설정
             val slideOut = ObjectAnimator.ofFloat(binding.fastPaceBtn, "translationX", 1000f)
             val slideInSlow = ObjectAnimator.ofFloat(binding.slowPaceBtn, "translationX", 0f)
             val slideInRegular = ObjectAnimator.ofFloat(binding.regularPaceBtn, "translationX", 0f)
-            maxpace = 6
-            minpace = 5
-//            realMaxPace = calculateSpeed(distance, maxpace)
-//            realMinPace = calculateSpeed(distance, minpace)
-//            println(realMaxPace)
-
             slideOut.duration = 200
             slideInSlow.duration = 200
             slideInRegular.duration = 200
+
+            //애니메이션 시작
             slideOut.start()
             slideInSlow.start()
             slideInRegular.start()
             binding.fastPaceVolumeBtn.isVisible = true
             binding.regularPaceVolumeBtn.isVisible = false
             binding.slowPaceVolumeBtn.isVisible = false
+
+            //페이스 값 할당
+            maxpace = 5
+            minpace = 6
         }
 
         //확인 버튼 클릭
@@ -154,7 +158,7 @@ class PaceActivity : AppCompatActivity() {
         }
 
         // SeekBar의 값을 실시간으로 업데이트
-// 수정된 코드 적용: 각 SeekBar와 텍스트 뷰를 setup하고, 값을 설정하는 부분
+        // 수정된 코드 적용: 각 SeekBar와 텍스트 뷰를 setup하고, 값을 설정하는 부분
         setupSeekBar(binding.slowPaceMinVolume, binding.slowPaceMinVolumeText) { minVolume = it; volumeHandler.setVolume(it) }
         setupSeekBar(binding.slowPaceMaxVolume, binding.slowPaceMaxVolumeText) { maxVolume = it; volumeHandler.setVolume(it) }
 
@@ -167,11 +171,6 @@ class PaceActivity : AppCompatActivity() {
 
     }
 
-    // 속도 계산 함수
-//    private fun calculateSpeed(distance: Double, time: Int): Double {
-//        // 시간은 분 단위로 입력받고, 속도는 km/h로 반환
-//        return (distance / time) * 60
-//    }
 
 
     private fun setupMultipleSeekBars(seekBars: List<SeekBar>, textViews: List<TextView>, onVolumeChanged: (Int) -> Unit) {
@@ -183,7 +182,7 @@ class PaceActivity : AppCompatActivity() {
 
 
     // SeekBar 리스너 설정 공통화
-// 기존 setupSeekBar 함수에서 volumeHandler와 TextView 값을 업데이트하는 코드 수정
+    // 기존 setupSeekBar 함수에서 volumeHandler와 TextView 값을 업데이트하는 코드 수정
     private fun setupSeekBar(seekBar: SeekBar, textView: TextView, onVolumeChanged: (Int) -> Unit) {
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -207,6 +206,14 @@ class PaceActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
     }
+
+
+
+    // 속도 계산 함수
+//    private fun calculateSpeed(distance: Double, time: Int): Double {
+//        // 시간은 분 단위로 입력받고, 속도는 km/h로 반환
+//        return (distance / time) * 60
+//    }
 
 
 
