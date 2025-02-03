@@ -100,67 +100,57 @@ class MainService: Service(), LocationListener {
     }
 
 
-    //사용자의 이동을 감지하며 내부적으로 계속 호출되는 메서드
+    // 사용자의 이동을 감지하며 내부적으로 계속 호출되는 메서드
     override fun onLocationChanged(location: Location) {
 
-        val speed = location.speed * 3.6f // m/s를 km/h로 변환
-
-        //현재 페이스 계산
-        val pace = calculatePace(location)
-        //볼륨 조절
-        val currentVolume = volumeHandler.volumeChanger(pace,targetPace, targetPace2, maxVolume, minVolume)
-
-
-        if (previousLocation != null) {
+            previousLocation = location
             // 이전 위치와 현재 위치 사이의 거리 계산
             val distance = previousLocation!!.distanceTo(location).toDouble()
             totalDistance += distance
-        }
-        previousLocation = location
 
-        // 이동 거리 정보를 프래그먼트로 전달하기 위한 브로드캐스트
-        val intent = Intent("ACTION_DISTANCE_UPDATED")
-        intent.putExtra("distance", totalDistance)
-        intent.putExtra("pace", pace) //측정되는 페이스를 넘김
-        intent.putExtra("currentVolume",currentVolume)
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
+
+            val pace = calculatePace(location)
+
+            // 볼륨 조절
+            val currentVolume = volumeHandler.volumeChanger(pace, targetPace, targetPace2, maxVolume, minVolume)
+
+
+            // 이동 거리 정보를 프래그먼트로 전달하기 위한 브로드캐스트
+            val intent = Intent("ACTION_DISTANCE_UPDATED")
+            intent.putExtra("distance", totalDistance)
+            intent.putExtra("pace", pace)
+            intent.putExtra("currentVolume", currentVolume)
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
     }
 
-
-
+    // 페이스 계산 메서드
     private fun calculatePace(location: Location): String {
         // 이전 위치와 현재 위치 사이의 거리를 계산
-        if (previousLocation != null) {
-            // 현재 위치와 이전 위치 사이의 거리 (미터 단위)
-            val distanceInMeters = previousLocation!!.distanceTo(location)
-            totalDistance += distanceInMeters  // 총 거리 갱신
 
-            // 이동 시간 (초 단위)
-            val timeInSeconds = (location.time - previousLocation!!.time) / 1000.0
 
-            if (timeInSeconds > 0) {
-                // 이동한 거리를 킬로미터로 변환
-                val distanceInKm = totalDistance / 1000.0
+                val timeInSeconds = (location.time - previousLocation!!.time) / 1000.0
 
-                // 이동 시간 (분)
-                val timeInMinutes = timeInSeconds / 60.0
+                if (timeInSeconds > 0) {
+                    // 이동한 거리를 킬로미터로 변환
+                    val distanceInKm = totalDistance / 1000.0
 
-                // 페이스 계산: 시간당 1킬로미터를 주파하는 데 걸린 시간 (분/km)
-                val paceInMinutesPerKm = timeInMinutes / distanceInKm
+                    // 이동 시간 (분)
+                    val timeInMinutes = timeInSeconds / 60.0
 
-                // 페이스를 분/초로 변환
-                val minutes = paceInMinutesPerKm.toInt()
-                val seconds = ((paceInMinutesPerKm - minutes) * 60).toInt()
+                    // 페이스 계산: 시간당 1킬로미터를 주파하는 데 걸린 시간 (분/km)
+                    val paceInMinutesPerKm = timeInMinutes / distanceInKm
 
-                return String.format("%02d:%02d", minutes, seconds)
-            }
-        }
-        // 초기에는 "00:00"을 반환 (페이스 계산 전)
+                    // 페이스를 분/초로 변환
+                    val minutes = paceInMinutesPerKm.toInt()
+                    val seconds = ((paceInMinutesPerKm - minutes) * 60).toInt()
+
+                    return String.format("%02d:%02d", minutes, seconds)
+                }
+
+
+        // 이동이 없거나 처음 시작하는 경우에는 "00:00"
         return "00:00"
     }
-
-
-
 
 
     override fun onBind(p0: Intent?): IBinder? {
