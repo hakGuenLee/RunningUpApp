@@ -79,6 +79,7 @@ class GrantActivity : AppCompatActivity() {
             } else {
                 // 권한이 거부된 경우
                 Toast.makeText(this, "권한을 허용해야 앱을 사용할 수 있습니다.", Toast.LENGTH_SHORT).show()
+                binding.grantBtn.isEnabled = true
             }
         }
     }
