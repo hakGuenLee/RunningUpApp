@@ -2,6 +2,7 @@ package home.runforlisten.runningup
 
 import android.Manifest
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -16,7 +17,9 @@ class GrantActivity : AppCompatActivity() {
 
     private lateinit var binding: GrantPageBinding
     private lateinit var permissionManager: PermissionManager
+    private lateinit var firstRunCheckData: SharedPreferences
     private val REQUEST_PERMISSIONS = 1
+    private var firstUserChecker = 0
 
     private val permissionList = listOf(
         Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -38,6 +41,9 @@ class GrantActivity : AppCompatActivity() {
 
 //        permissionManager = PermissionManager(this)
 
+
+        firstRunCheckData = getSharedPreferences("AppPrefs", MODE_PRIVATE)
+        firstUserChecker = firstRunCheckData.getInt("firstUserChecker", 0)
 
         binding.grantBtn.setOnClickListener {
             permissionRequester()
@@ -74,8 +80,18 @@ class GrantActivity : AppCompatActivity() {
             val allPermissionsGranted = grantResults.all { it == PackageManager.PERMISSION_GRANTED }
 
             if (allPermissionsGranted) {
-                // 모든 권한이 허용된 경우 HomeActivity로 이동
-                navigateToHomeActivity()
+                // 모든 권한이 허용되었고 앱 최초 실행자라면 튜토리얼 액티비티로 전환
+                // 모든 권한이 허용되었고 앱 최초 실행자가 아니면 홈 액티비티로 전환
+
+                if(firstUserChecker == 0){
+                    firstUserChecker = 1
+                    saveFirstUserChecker()
+                    navigateTutorialActivity()
+
+                }else{
+                    navigateToHomeActivity()
+                }
+
             } else {
                 // 권한이 거부된 경우
                 Toast.makeText(this, "권한을 허용해야 앱을 사용할 수 있습니다.", Toast.LENGTH_SHORT).show()
@@ -84,11 +100,24 @@ class GrantActivity : AppCompatActivity() {
         }
     }
 
+    private fun navigateTutorialActivity(){
+        val intent = Intent(this, TutorialActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     // HomeActivity로 이동하는 함수
     private fun navigateToHomeActivity() {
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         finish() // 현재 Activity 종료
+    }
+
+    // 첫 번째 사용자인지 여부를 SharedPreferences에 저장
+    private fun saveFirstUserChecker() {
+        val editor = firstRunCheckData.edit()
+        editor.putInt("firstUserChecker", firstUserChecker)
+        editor.apply()
     }
 
 

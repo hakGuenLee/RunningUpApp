@@ -33,6 +33,7 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".PaceActivity" />
         <activity android:name=".RunActivity" />
+        <activity android:name=".TutorialActivity" />
         <service
             android:name=".MainService"
             android:foregroundServiceType="location"
