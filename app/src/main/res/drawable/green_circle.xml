@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#59D286"/> <!-- 원의 색을 빨간색으로 설정 -->
+    <size android:width="9.94dp" android:height="10dp"/> <!-- 원의 크기 설정 -->
+    <corners android:radius="50dp"/> <!-- 원 모양으로 만들기 위해 반지름을 50%로 설정 -->
+</shape>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#78000000"
+    >
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/tutorialViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/circle_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" /> <!-- 상단에서 50% 위치 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/circle_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <ImageView
+            android:layout_width="9dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="110dp"
+            android:background="@drawable/left_arrow"
+            />
+        <ImageView
+            android:id="@+id/first_circle"
+            android:layout_width="9.94dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="12dp"
+            android:background="@drawable/white_circle"
+            />
+        <ImageView
+            android:id="@+id/second_circle"
+            android:layout_width="9.94dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="12dp"
+            android:background="@drawable/white_circle"
+            />
+        <ImageView
+            android:id="@+id/third_circle"
+            android:layout_width="9.94dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="12dp"
+            android:background="@drawable/white_circle"
+            />
+        <ImageView
+            android:id="@+id/fourth_circle"
+            android:layout_width="9.94dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="12dp"
+            android:background="@drawable/white_circle"
+            />
+        <ImageView
+            android:id="@+id/fifth_circle"
+            android:layout_width="9.94dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="12dp"
+            android:background="@drawable/white_circle"
+            />
+        <ImageView
+            android:id="@+id/sixth_circle"
+            android:layout_width="9.94dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="12dp"
+            android:background="@drawable/white_circle"
+            />
+
+        <ImageView
+            android:layout_width="9dp"
+            android:layout_height="18dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/right_arrow"
+            />
+
+
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
