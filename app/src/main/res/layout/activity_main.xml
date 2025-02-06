@@ -15,21 +15,66 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" /> <!-- 상단에서 50% 위치 -->
+        app:layout_constraintGuide_percent="0.3" />
 
-    <!-- TextView -->
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="231dp"
-        android:layout_height="56dp"
-        android:alpha="1"
-        android:fontFamily="@font/pyeongchangpeace_light"
-        android:gravity="left|top"
-        android:text="Running UP"
-        android:textColor="#ff59D286"
-        android:textFontWeight="300"
-        android:textSize="42sp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+    >
+
+        <ImageView
+            android:layout_width="97dp"
+            android:layout_height="168dp"
+            android:layout_marginStart="63dp"
+            android:background="@drawable/logo_r"
+            />
+        <ImageView
+            android:layout_width="152dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="21dp"
+            android:background="@drawable/logo_un"
+            />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/listen_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:layout_width="182dp"
+        android:layout_height="52dp"
+        android:text="For Listen"
+        android:textSize="28sp"
+        android:textColor="#ff000000"
+        android:textFontWeight="300"
+        android:fontFamily="@font/pyeongchangpeace_light"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/listen_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+    <!-- TextView -->
+<!--    <TextView-->
+<!--        android:id="@+id/textView"-->
+<!--        android:layout_width="231dp"-->
+<!--        android:layout_height="56dp"-->
+<!--        android:alpha="1"-->
+<!--        android:fontFamily="@font/pyeongchangpeace_light"-->
+<!--        android:gravity="left|top"-->
+<!--        android:text="Running UP"-->
+<!--        android:textColor="#ff59D286"-->
+<!--        android:textFontWeight="300"-->
+<!--        android:textSize="42sp"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/guideline"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>
