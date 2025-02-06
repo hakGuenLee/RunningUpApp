@@ -13,13 +13,14 @@ import home.runforlisten.runningup.databinding.TutorialMasterPageBinding
 class TutorialActivity: AppCompatActivity() {
 
     private lateinit var binding: TutorialMasterPageBinding
+    private lateinit var tutorialViewPager: ViewPager2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = TutorialMasterPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val tutorialViewPager: ViewPager2 = binding.tutorialViewPager
+        tutorialViewPager = binding.tutorialViewPager
 
         val adapter = object:FragmentStateAdapter(this){
             override fun createFragment(position: Int): Fragment {
@@ -50,9 +51,16 @@ class TutorialActivity: AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+        // 뒤로가기 버튼 눌렀을 때 이전 페이지로 이동
+        if (tutorialViewPager.currentItem > 0) {
+            tutorialViewPager.setCurrentItem(tutorialViewPager.currentItem - 1, true)
+        } else {
+            super.onBackPressed()
+        }
+    }
+
     private fun circleChangeColor(position: Int){
-
-
 
         when (position) {
             0 -> {binding.firstCircle.setBackgroundResource(R.drawable.green_circle)
