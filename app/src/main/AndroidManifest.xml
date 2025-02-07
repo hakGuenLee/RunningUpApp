@@ -32,6 +32,7 @@
         <activity android:name=".GrantActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".PaceActivity" />
+        <activity android:name=".PaceSelectActivity" />
         <activity android:name=".RunActivity" />
         <activity android:name=".TutorialActivity" />
         <service
