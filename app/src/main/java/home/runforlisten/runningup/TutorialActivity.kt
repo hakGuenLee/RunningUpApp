@@ -33,9 +33,9 @@ class TutorialActivity: AppCompatActivity() {
                     4 -> TutorialFragment5()
                     5 -> TutorialFragment6()
                     else -> throw IllegalStateException("Invalid position: $position")
+
                 }
             }
-
 
             override fun getItemCount(): Int {
                 return 6
@@ -47,12 +47,29 @@ class TutorialActivity: AppCompatActivity() {
 
         tutorialViewPager.setPageTransformer(null)
 
+
         tutorialViewPager.setPageTransformer { page, position ->
             page.translationX = position * -page.width.toFloat()
             page.alpha = 1 - Math.abs(position)
+
         }
 
         tutorialViewPager.offscreenPageLimit = 1
+
+        // 화살표 버튼 클릭 리스너 설정
+        binding.leftArrow.setOnClickListener {
+            // 왼쪽 화살표 클릭 시 이전 페이지로 이동
+            if (tutorialViewPager.currentItem > 0) {
+                tutorialViewPager.setCurrentItem(tutorialViewPager.currentItem - 1, false)
+            }
+        }
+
+        binding.rightArrow.setOnClickListener {
+            // 오른쪽 화살표 클릭 시 다음 페이지로 이동
+            if (tutorialViewPager.currentItem < 5) {
+                tutorialViewPager.setCurrentItem(tutorialViewPager.currentItem + 1, false)
+            }
+        }
 
 
         tutorialViewPager.registerOnPageChangeCallback(object:ViewPager2.OnPageChangeCallback(){

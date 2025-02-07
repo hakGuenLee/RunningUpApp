@@ -29,6 +29,7 @@
         >
 
         <ImageView
+            android:id="@+id/left_arrow"
             android:layout_width="9dp"
             android:layout_height="18dp"
             android:layout_marginStart="110dp"
@@ -84,6 +85,7 @@
             />
 
         <ImageView
+            android:id="@+id/right_arrow"
             android:layout_width="9dp"
             android:layout_height="18dp"
             android:layout_marginStart="12dp"
