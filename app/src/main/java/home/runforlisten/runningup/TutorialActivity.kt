@@ -1,6 +1,7 @@
 package home.runforlisten.runningup
 
 
+
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -35,6 +36,7 @@ class TutorialActivity: AppCompatActivity() {
                 }
             }
 
+
             override fun getItemCount(): Int {
                 return 6
             }
@@ -42,6 +44,17 @@ class TutorialActivity: AppCompatActivity() {
 
         tutorialViewPager.adapter = adapter
         tutorialViewPager.isUserInputEnabled = true
+
+        tutorialViewPager.setPageTransformer(null)
+
+        tutorialViewPager.setPageTransformer { page, position ->
+            page.translationX = position * -page.width.toFloat()
+            page.alpha = 1 - Math.abs(position)
+        }
+
+        tutorialViewPager.offscreenPageLimit = 1
+
+
         tutorialViewPager.registerOnPageChangeCallback(object:ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
@@ -51,14 +64,16 @@ class TutorialActivity: AppCompatActivity() {
 
     }
 
+    //뒤로가기 버튼 누르면 이전 프래그먼트로 이동
     override fun onBackPressed() {
-        // 뒤로가기 버튼 눌렀을 때 이전 페이지로 이동
+      
         if (tutorialViewPager.currentItem > 0) {
             tutorialViewPager.setCurrentItem(tutorialViewPager.currentItem - 1, true)
         } else {
             super.onBackPressed()
         }
     }
+    
 
     private fun circleChangeColor(position: Int){
 
