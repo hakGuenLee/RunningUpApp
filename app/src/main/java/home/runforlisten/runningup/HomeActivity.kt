@@ -28,7 +28,7 @@ class HomeActivity: AppCompatActivity() {
 
         //하단의 아이콘을 누르면 pace 선택 메뉴 화면으로 넘어가기
         binding.runStartBtn.setOnClickListener {
-           val intent = Intent(this, PaceSelectActivity::class.java)
+           val intent = Intent(this, MaxPaceSelectActivity::class.java)
             startActivity(intent)
             finish()
         }

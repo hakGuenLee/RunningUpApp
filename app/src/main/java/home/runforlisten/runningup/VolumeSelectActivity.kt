@@ -2,7 +2,6 @@ package home.runforlisten.runningup
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import home.runforlisten.runningup.databinding.PaceSettingPageBinding
 import home.runforlisten.runningup.databinding.VolumeSettingPageBinding
 
 class VolumeSelectActivity : AppCompatActivity() {

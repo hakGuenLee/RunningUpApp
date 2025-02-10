@@ -107,6 +107,7 @@
         >
 
         <TextView
+            android:id="@+id/max_pace_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0'00''/km"
@@ -164,6 +165,7 @@
         >
 
         <TextView
+            android:id="@+id/pace_value_text"
             android:layout_width="130dp"
             android:layout_height="52dp"
             android:text="0' 00''"

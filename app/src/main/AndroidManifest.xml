@@ -32,7 +32,8 @@
         <activity android:name=".GrantActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".PaceActivity" />
-        <activity android:name=".PaceSelectActivity" />
+        <activity android:name=".MaxPaceSelectActivity" />
+        <activity android:name=".MinPaceSelectActivity" />
         <activity android:name=".VolumeSelectActivity" />
         <activity android:name=".RunActivity" />
         <activity android:name=".TutorialActivity" />
