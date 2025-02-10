@@ -43,17 +43,19 @@ class TutorialActivity: AppCompatActivity() {
         }
 
         tutorialViewPager.adapter = adapter
-        tutorialViewPager.isUserInputEnabled = true
-
-        tutorialViewPager.setPageTransformer(null)
+//        tutorialViewPager.isUserInputEnabled = false
 
 
-        tutorialViewPager.setPageTransformer { page, position ->
-            page.translationX = position * -page.width.toFloat()
-            page.alpha = 1 - Math.abs(position)
+       tutorialViewPager.setPageTransformer(null)
+        
 
-        }
+//        tutorialViewPager.setPageTransformer { page, position ->
+//            page.translationX = position * -page.width.toFloat()
+//            page.alpha = 1 - Math.abs(position)
+//
+//        }
 
+        //프래그먼트를 미리 로딩하는 갯수
         tutorialViewPager.offscreenPageLimit = 1
 
         // 화살표 버튼 클릭 리스너 설정
@@ -85,12 +87,16 @@ class TutorialActivity: AppCompatActivity() {
     override fun onBackPressed() {
       
         if (tutorialViewPager.currentItem > 0) {
-            tutorialViewPager.setCurrentItem(tutorialViewPager.currentItem - 1, true)
+            tutorialViewPager.setCurrentItem(tutorialViewPager.currentItem - 1, false)
         } else {
             super.onBackPressed()
         }
     }
-    
+
+    private fun showPage(position: Int) {
+        tutorialViewPager.setCurrentItem(position, true)
+    }
+
 
     private fun circleChangeColor(position: Int){
 
