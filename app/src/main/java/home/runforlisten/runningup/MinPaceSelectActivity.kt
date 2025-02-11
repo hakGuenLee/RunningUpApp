@@ -1,5 +1,6 @@
 package home.runforlisten.runningup
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
@@ -42,6 +43,14 @@ class MinPaceSelectActivity : AppCompatActivity() {
 
             }
         })
+
+        binding.confirmBtn.setOnClickListener {
+            val intent = Intent(this, MaxMinVolumeSelectActivity::class.java)
+            intent.putExtra("max_pace", maxPace)
+            intent.putExtra("min_pace", minPace)
+            startActivity(intent)
+            finish()
+        }
 
     }
 

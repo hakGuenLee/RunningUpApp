@@ -33,6 +33,7 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".PaceActivity" />
         <activity android:name=".MaxPaceSelectActivity" />
+        <activity android:name=".MaxMinVolumeSelectActivity" />
         <activity android:name=".MinPaceSelectActivity" />
         <activity android:name=".VolumeSelectActivity" />
         <activity android:name=".RunActivity" />
