@@ -46,14 +46,14 @@ class TutorialActivity: AppCompatActivity() {
 //        tutorialViewPager.isUserInputEnabled = false
 
 
-       tutorialViewPager.setPageTransformer(null)
-        
-
-//        tutorialViewPager.setPageTransformer { page, position ->
-//            page.translationX = position * -page.width.toFloat()
-//            page.alpha = 1 - Math.abs(position)
+//       tutorialViewPager.setPageTransformer(null)
 //
-//        }
+
+        tutorialViewPager.setPageTransformer { page, position ->
+            page.translationX = position * -page.width.toFloat()
+            page.alpha = 1 - Math.abs(position)
+
+        }
 
         //프래그먼트를 미리 로딩하는 갯수
         tutorialViewPager.offscreenPageLimit = 1

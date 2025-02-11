@@ -9,7 +9,7 @@ import home.runforlisten.runningup.databinding.MaxPaceSettingPageBinding
 class MaxPaceSelectActivity : AppCompatActivity() {
 
     private lateinit var binding: MaxPaceSettingPageBinding
-    private lateinit var maxPace: String
+    private var maxPace: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,9 +22,10 @@ class MaxPaceSelectActivity : AppCompatActivity() {
             override fun onProgressChanged(maxPaceSelectBar: SeekBar?, progress: Int, p2: Boolean) {
                 val selectPaceValue = 20 - progress
                 val realValue = selectPaceValue.toString()
-                maxPace = "$realValue' 00''/km"
+                val maxPaceText = "$realValue' 00''/km"
                 val paceValue = "$realValue' 00''"
-                binding.maxPaceText.text = "$maxPace"
+                maxPace = selectPaceValue
+                binding.maxPaceText.text = "$maxPaceText"
                 binding.paceValueText.text = "$paceValue"
 
             }
@@ -39,6 +40,9 @@ class MaxPaceSelectActivity : AppCompatActivity() {
         })
 
         binding.confirmBtn.setOnClickListener {
+
+
+
             val intent = Intent(this, MinPaceSelectActivity::class.java)
             intent.putExtra("max_pace", maxPace)
             startActivity(intent)
