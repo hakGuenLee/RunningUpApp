@@ -36,6 +36,7 @@
         <activity android:name=".MaxMinVolumeSelectActivity" />
         <activity android:name=".MinPaceSelectActivity" />
         <activity android:name=".VolumeSelectActivity" />
+        <activity android:name=".RunninMainActivity" />
         <activity android:name=".RunActivity" />
         <activity android:name=".TutorialActivity" />
         <service

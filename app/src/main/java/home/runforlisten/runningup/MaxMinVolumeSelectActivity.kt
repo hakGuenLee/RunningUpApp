@@ -1,10 +1,12 @@
 package home.runforlisten.runningup
 
 import android.content.Context
+import android.content.Intent
 import android.media.AudioManager
 import android.os.Bundle
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import home.runforlisten.runningup.databinding.MaxMinVolumeSettingPageBinding
@@ -15,6 +17,8 @@ class MaxMinVolumeSelectActivity : AppCompatActivity() {
     private lateinit var binding: MaxMinVolumeSettingPageBinding
     private var maxPace: Int = 0
     private var minPace: Int = 0
+    private var maxVolume: Int = 0
+    private var minVolume: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +53,8 @@ class MaxMinVolumeSelectActivity : AppCompatActivity() {
                 // SeekBar 값이 변경될 때마다 max_volume_value_text 업데이트
                 maxVolumeText.text = "$progress" // SeekBar의 값으로 텍스트 업데이트
 
+                maxVolume = progress
+
                 // max_volume_box를 보이도록 설정
                 maxVolumeBox.visibility = CardView.VISIBLE
             }
@@ -65,6 +71,8 @@ class MaxMinVolumeSelectActivity : AppCompatActivity() {
                 // SeekBar 값이 변경될 때마다 min_volume_value_text 업데이트
                 minVolumeText.text = "$progress" // SeekBar의 값으로 텍스트 업데이트
 
+                minVolume = progress
+
                 // min_volume_box를 보이도록 설정
                 minVolumeBox.visibility = CardView.VISIBLE
             }
@@ -72,6 +80,30 @@ class MaxMinVolumeSelectActivity : AppCompatActivity() {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
+
+
+        binding.confirmBtn.setOnClickListener {
+
+            if(maxVolume == 0){
+                Toast.makeText(this, "최대 볼륨을 선택해 주세요!", Toast.LENGTH_SHORT).show()
+            }else if(minVolume == 0){
+                Toast.makeText(this, "최소 볼륨을 선택해 주세요!", Toast.LENGTH_SHORT).show()
+            }else if(maxVolume < minVolume){
+                Toast.makeText(this, "최소 볼륨보다 높은 최대 볼륨을 선택해 주세요!", Toast.LENGTH_SHORT).show()
+            }else if(minVolume > maxVolume){
+                Toast.makeText(this, "최대 볼륨보다 낮은 최소 볼륨을 선택해 주세요!", Toast.LENGTH_SHORT).show()
+            } else{
+
+                val intent = Intent(this, RunninMainActivity::class.java)
+                intent.putExtra("max_pace", maxPace)
+                intent.putExtra("min_pace", minPace)
+                intent.putExtra("max_volume", maxVolume)
+                intent.putExtra("min_volume", minVolume)
+                startActivity(intent)
+                finish()
+            }
+
+        }
     }
 
 

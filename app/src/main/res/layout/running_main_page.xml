@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/auto_volume_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.01" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/auto_volume_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <TextView
+            android:layout_width="130dp"
+            android:layout_height="29dp"
+            android:layout_marginLeft="195dp"
+            android:text="Auto Volume"
+            android:textColor="#ff59D286"
+            android:textSize="20sp"
+            android:fontFamily="@font/scdream_bold"
+            />
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="31dp"
+            android:layout_marginLeft="340dp"
+            android:track="@drawable/main_switch"
+            android:thumb="@drawable/main_switch_thumb"/>
+
+
+
+    </RelativeLayout>
+
+
+
+
+    <!--시간, 거리 가이드라인-->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/time_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.069" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/time_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <LinearLayout
+            android:layout_width="160dp"
+            android:layout_height="70dp"
+            android:orientation="vertical"
+            android:layout_marginStart="40dp"
+            android:gravity="center"
+            >
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:text="Time"
+                android:fontFamily="@font/scdream_medium"
+                />
+            <TextView
+                android:id="@+id/timer"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:textSize="25sp"
+                android:text="00:00:00"
+                android:fontFamily="@font/scdream_bold"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="160dp"
+            android:layout_height="70dp"
+            android:orientation="vertical"
+            android:layout_marginStart="250dp"
+            android:gravity="center"
+            >
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:gravity="center_horizontal"
+                android:text="Km"
+                android:fontFamily="@font/scdream_medium"
+                />
+            <TextView
+                android:id="@+id/distance"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:gravity="center_horizontal"
+                android:textSize="25sp"
+                android:text="0.0"
+                android:fontFamily="@font/scdream_bold"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!--최대 볼륨 가이드라인-->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/max_volume_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <TextView
+        android:id="@+id/maxVolume"
+        android:layout_width="180dp"
+        android:layout_height="30dp"
+        android:text="Max Volume : 100"
+        android:textColor="#ffFA391B"
+        android:textSize="17sp"
+        android:textFontWeight="100"
+        android:gravity="center"
+        android:fontFamily="@font/scdream_medium"
+        app:layout_constraintTop_toBottomOf="@id/max_volume_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <!--목표 페이스 가이드라인-->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/target_pace_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.19" />
+
+    <TextView
+        android:id="@+id/targetPace"
+        android:layout_width="180dp"
+        android:layout_height="30dp"
+        android:text="00'00 /km"
+        android:textColor="#ffFA391B"
+        android:textSize="17sp"
+        android:textFontWeight="600"
+        android:gravity="center"
+        android:fontFamily="@font/scdream_medium"
+        app:layout_constraintTop_toBottomOf="@id/target_pace_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/volume_bar_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+
+    <RelativeLayout
+        android:layout_width="86dp"
+        android:layout_height="410dp"
+        android:orientation="horizontal"
+        android:background="@drawable/main_volme_bar"
+        app:layout_constraintTop_toBottomOf="@id/volume_bar_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/pace_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.52" />
+
+    <RelativeLayout
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="210dp"
+        app:layout_constraintTop_toBottomOf="@id/pace_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <ImageView
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/main_pace_grapic"
+            />
+        <ImageView
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/main_pace_grapic"
+            />
+
+        <TextView
+            android:id="@+id/pace_status_text"
+            android:layout_width="120dp"
+            android:layout_height="29dp"
+            android:layout_marginLeft="35dp"
+            android:text="00'00''/km"
+            android:textSize="18sp"
+            android:textColor="#ff59D286"
+            android:fontFamily="@font/scdream_bold"
+            />
+
+
+
+    </RelativeLayout>
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/music_volume_status_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.71" />
+
+
+    <TextView
+        android:id="@+id/volumeStatus"
+        android:layout_width="30dp"
+        android:layout_height="29dp"
+        android:text="0"
+        android:textSize="24sp"
+        android:textFontWeight="400"
+        android:gravity="center"
+        android:fontFamily="@font/scdream_medium"
+        app:layout_constraintTop_toBottomOf="@id/music_volume_status_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+
+    <!--하단 버튼 가이드라인-->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/btn_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.83" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/btn_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <ImageView
+            android:id="@+id/startBtn"
+            android:layout_width="86dp"
+            android:layout_height="86dp"
+            android:layout_marginStart="100dp"
+            android:background="@drawable/run_start_icon"
+            />
+        <ImageView
+            android:id="@+id/stopBtn"
+            android:layout_width="86dp"
+            android:layout_height="86dp"
+            android:layout_marginStart="220dp"
+            android:background="@drawable/run_stop_icon"
+            />
+
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/floating_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.91" />
+
+    <ImageView
+        android:layout_width="57dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="300dp"
+        android:background="@drawable/main_fab"
+        app:layout_constraintTop_toBottomOf="@id/floating_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
