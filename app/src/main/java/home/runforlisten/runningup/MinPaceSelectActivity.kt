@@ -3,6 +3,7 @@ package home.runforlisten.runningup
 import android.content.Intent
 import android.os.Bundle
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import home.runforlisten.runningup.databinding.MinPaceSettingPageBinding
 
@@ -46,11 +47,17 @@ class MinPaceSelectActivity : AppCompatActivity() {
         })
 
         binding.confirmBtn.setOnClickListener {
-            val intent = Intent(this, MaxMinVolumeSelectActivity::class.java)
-            intent.putExtra("max_pace", maxPace)
-            intent.putExtra("min_pace", minPace)
-            startActivity(intent)
-            finish()
+
+            if(minPace == 0){
+                Toast.makeText(this, "최소 페이스를 선택해 주세요!", Toast.LENGTH_SHORT).show()
+            }else{
+                val intent = Intent(this, MaxMinVolumeSelectActivity::class.java)
+                intent.putExtra("max_pace", maxPace)
+                intent.putExtra("min_pace", minPace)
+                startActivity(intent)
+                finish()
+            }
+
         }
 
     }
