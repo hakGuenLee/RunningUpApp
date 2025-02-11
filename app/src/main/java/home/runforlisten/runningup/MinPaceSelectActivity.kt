@@ -50,6 +50,8 @@ class MinPaceSelectActivity : AppCompatActivity() {
 
             if(minPace == 0){
                 Toast.makeText(this, "최소 페이스를 선택해 주세요!", Toast.LENGTH_SHORT).show()
+            }else if(minPace < maxPace){
+                Toast.makeText(this, "최대 페이스보다 느린 페이스를 선택해 주세요!", Toast.LENGTH_SHORT).show()
             }else{
                 val intent = Intent(this, MaxMinVolumeSelectActivity::class.java)
                 intent.putExtra("max_pace", maxPace)
@@ -57,6 +59,7 @@ class MinPaceSelectActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
+
 
         }
 
