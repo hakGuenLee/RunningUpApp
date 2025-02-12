@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.SeekBar
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import home.runforlisten.runningup.databinding.MinPaceSettingPageBinding
 
@@ -50,8 +51,8 @@ class MinPaceSelectActivity : AppCompatActivity() {
 
             if(minPace == 0){
                 Toast.makeText(this, "최소 페이스를 선택해 주세요!", Toast.LENGTH_SHORT).show()
-            }else if(minPace < maxPace){
-                Toast.makeText(this, "최대 페이스보다 느린 페이스를 선택해 주세요!", Toast.LENGTH_SHORT).show()
+            }else if(minPace <= maxPace){
+                Toast.makeText(this, "최고 페이스보다 느린 페이스를 선택해 주세요!", Toast.LENGTH_SHORT).show()
             }else{
                 val intent = Intent(this, MaxMinVolumeSelectActivity::class.java)
                 intent.putExtra("max_pace", maxPace)
@@ -62,6 +63,15 @@ class MinPaceSelectActivity : AppCompatActivity() {
 
 
         }
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val intent = Intent(this@MinPaceSelectActivity, MaxPaceSelectActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
+        onBackPressedDispatcher.addCallback(this@MinPaceSelectActivity, callback)
 
     }
 

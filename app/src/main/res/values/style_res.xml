@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<resources>
+    <style name="WhitePageBarTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor">#FFFFFF</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="TutorialPageBarTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor">#78000000</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="CustomCalendarTextAppearance"><!-- 텍스트 색상 (빨간색) -->
+        <item name="android:textSize">14sp</item> <!-- 텍스트 크기 -->
+        <item name="android:textColor">#ff212121</item>
+    </style>
+</resources>

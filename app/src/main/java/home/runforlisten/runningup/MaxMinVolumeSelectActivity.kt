@@ -7,9 +7,11 @@ import android.os.Bundle
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import home.runforlisten.runningup.databinding.MaxMinVolumeSettingPageBinding
+import kotlin.math.max
 
 class MaxMinVolumeSelectActivity : AppCompatActivity() {
 
@@ -89,9 +91,9 @@ class MaxMinVolumeSelectActivity : AppCompatActivity() {
             }else if(minVolume == 0){
                 Toast.makeText(this, "최소 볼륨을 선택해 주세요!", Toast.LENGTH_SHORT).show()
             }else if(maxVolume < minVolume){
-                Toast.makeText(this, "최소 볼륨보다 높은 최대 볼륨을 선택해 주세요!", Toast.LENGTH_SHORT).show()
-            }else if(minVolume > maxVolume){
                 Toast.makeText(this, "최대 볼륨보다 낮은 최소 볼륨을 선택해 주세요!", Toast.LENGTH_SHORT).show()
+            }else if(minVolume == maxVolume){
+                Toast.makeText(this, "볼륨이 똑같습니다!", Toast.LENGTH_SHORT).show()
             } else{
 
                 val intent = Intent(this, RunninMainActivity::class.java)
@@ -104,6 +106,17 @@ class MaxMinVolumeSelectActivity : AppCompatActivity() {
             }
 
         }
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val intent = Intent(this@MaxMinVolumeSelectActivity, MinPaceSelectActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
+        onBackPressedDispatcher.addCallback(this@MaxMinVolumeSelectActivity, callback)
+
+
     }
 
 

@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    >
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/auto_volume_line"
@@ -73,6 +75,7 @@
             <TextView
                 android:layout_width="50dp"
                 android:layout_height="20dp"
+                android:textColor="#ff212121"
                 android:text="Time"
                 android:fontFamily="@font/scdream_medium"
                 />
@@ -81,6 +84,7 @@
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:textSize="25sp"
+                android:textColor="#ff212121"
                 android:text="00:00:00"
                 android:fontFamily="@font/scdream_bold"
                 />
@@ -98,6 +102,7 @@
                 android:layout_width="50dp"
                 android:layout_height="20dp"
                 android:gravity="center_horizontal"
+                android:textColor="#ff212121"
                 android:text="Km"
                 android:fontFamily="@font/scdream_medium"
                 />
@@ -107,6 +112,7 @@
                 android:layout_height="50dp"
                 android:gravity="center_horizontal"
                 android:textSize="25sp"
+                android:textColor="#ff212121"
                 android:text="0.0"
                 android:fontFamily="@font/scdream_bold"
                 />
@@ -126,7 +132,7 @@
         android:id="@+id/maxVolume"
         android:layout_width="180dp"
         android:layout_height="30dp"
-        android:text="Max Volume : 100"
+        android:text="Max Volume : 0"
         android:textColor="#ffFA391B"
         android:textSize="17sp"
         android:textFontWeight="100"

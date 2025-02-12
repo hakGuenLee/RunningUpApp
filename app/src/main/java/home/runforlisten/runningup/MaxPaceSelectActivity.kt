@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.SeekBar
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import home.runforlisten.runningup.databinding.MaxPaceSettingPageBinding
 
@@ -51,6 +52,15 @@ class MaxPaceSelectActivity : AppCompatActivity() {
                 finish()
             }
         }
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val intent = Intent(this@MaxPaceSelectActivity, HomeActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
+        onBackPressedDispatcher.addCallback(this@MaxPaceSelectActivity, callback)
 
     }
 
