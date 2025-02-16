@@ -13,6 +13,8 @@ class MinPaceSelectActivity : AppCompatActivity() {
     private lateinit var binding: MinPaceSettingPageBinding
     private var maxPace: Int = 0
     private var minPace: Int = 0
+    private var maxPaceMinutes: Int = 0
+    private var maxPaceSeconds: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +22,9 @@ class MinPaceSelectActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         maxPace = intent.getIntExtra("max_pace", 0)
-        binding.maxPaceText.text = "$maxPace' 00''/km"
+        maxPaceMinutes = intent.getIntExtra("max_pace_minutes",0)
+        maxPaceSeconds = intent.getIntExtra("max_pace_seconds", 0)
+        binding.maxPaceText.text = "$maxPaceMinutes' $maxPaceSeconds''/km"
 
 
 

@@ -16,4 +16,11 @@
         <item name="android:textSize">14sp</item> <!-- 텍스트 크기 -->
         <item name="android:textColor">#ff212121</item>
     </style>
+
+
+    <style name="PaceNumberPickerStyle" parent="">
+        <item name="android:textSize">36sp</item>
+        <item name="android:textColorPrimary">#ff525252</item>
+    </style>
+
 </resources>
