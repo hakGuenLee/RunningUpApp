@@ -146,7 +146,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.43" />
+        app:layout_constraintGuide_percent="0.38" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/pace_text_vertical_line"
@@ -165,33 +165,76 @@
         app:layout_constraintHorizontal_bias="0.0"
         >
 
-        <TextView
-            android:id="@+id/pace_value_text"
-            android:layout_width="130dp"
-            android:layout_height="52dp"
-            android:text="0' 00''"
-            android:textSize="36sp"
-            android:textColor="#ff525252"
-            android:textFontWeight="300"
-            android:fontFamily="@font/scdream_bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+        <!-- 분을 선택하는 NumberPicker -->
+        <NumberPicker
+            android:id="@+id/minutesPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:selectionDividerHeight="0dp"
+            android:theme="@style/PaceNumberPickerStyle"
             />
-        <TextView
-            android:layout_width="102dp"
-            android:layout_height="52dp"
-            android:text="분 /km"
-            android:textSize="28sp"
-            android:fontFamily="@font/scdream_regular"
-            android:textColor="#ff525252"
-            android:textFontWeight="300"
-            android:gravity="left"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+        <!-- 초를 선택하는 NumberPicker -->
+        <NumberPicker
+            android:id="@+id/secondsPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:selectionDividerHeight="0dp"
+            android:theme="@style/PaceNumberPickerStyle"
             />
+
+<!--        <TextView-->
+<!--            android:id="@+id/pace_value_text"-->
+<!--            android:layout_width="130dp"-->
+<!--            android:layout_height="52dp"-->
+<!--            android:text="0' 00''"-->
+<!--            android:textSize="36sp"-->
+<!--            android:textColor="#ff525252"-->
+<!--            android:textFontWeight="300"-->
+<!--            android:fontFamily="@font/scdream_bold"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            />-->
+<!--        <TextView-->
+<!--            android:layout_width="102dp"-->
+<!--            android:layout_height="52dp"-->
+<!--            android:text="분 /km"-->
+<!--            android:textSize="28sp"-->
+<!--            android:fontFamily="@font/scdream_regular"-->
+<!--            android:textColor="#ff525252"-->
+<!--            android:textFontWeight="300"-->
+<!--            android:gravity="left"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            />-->
 
     </LinearLayout>
 
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/pace_text_line2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.474" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/pace_text_line2_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.62" />
+
+    <TextView
+        android:layout_width="102dp"
+        android:layout_height="52dp"
+        android:text="분 /km"
+        android:textSize="28sp"
+        android:fontFamily="@font/scdream_regular"
+        android:textColor="#ff525252"
+        android:textFontWeight="300"
+        app:layout_constraintTop_toBottomOf="@id/pace_text_line2"
+        app:layout_constraintStart_toStartOf="@id/pace_text_line2_vertical"
+        />
 
 
     <!--SeekBar-->
@@ -200,7 +243,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.63" />
+        app:layout_constraintGuide_percent="0.67" />
 
     <SeekBar
         android:id="@+id/pace_setting_seekbar"
@@ -208,8 +251,8 @@
         android:layout_height="wrap_content"
         android:progressDrawable="@drawable/seekbar"
         android:thumb="@drawable/seekbar_thumb"
-        android:max="20"
-        android:progress="10"
+        android:max="1259"
+        android:progress="0"
         app:layout_constraintTop_toBottomOf="@id/pace_settingbar_line"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

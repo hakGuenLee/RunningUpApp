@@ -165,8 +165,6 @@
         >
 
         <!-- 분을 선택하는 NumberPicker -->
-
-        <!-- 초를 선택하는 NumberPicker -->
         <NumberPicker
             android:id="@+id/minutesPicker"
             android:layout_width="wrap_content"
@@ -174,7 +172,7 @@
             android:selectionDividerHeight="0dp"
             android:theme="@style/PaceNumberPickerStyle"
             />
-
+        <!-- 초를 선택하는 NumberPicker -->
         <NumberPicker
             android:id="@+id/secondsPicker"
             android:layout_width="wrap_content"

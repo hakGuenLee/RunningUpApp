@@ -19,6 +19,10 @@ class MaxMinVolumeSelectActivity : AppCompatActivity() {
     private lateinit var binding: MaxMinVolumeSettingPageBinding
     private var maxPace: Int = 0
     private var minPace: Int = 0
+    private var maxPaceMinutes: Int = 0
+    private var maxPaceSeconds: Int = 0
+    private var minPaceMinutes: Int = 0
+    private var minPaceSeconds: Int = 0
     private var maxVolume: Int = 0
     private var minVolume: Int = 0
 
@@ -33,8 +37,12 @@ class MaxMinVolumeSelectActivity : AppCompatActivity() {
         // 페이스 값 출력
         maxPace = intent.getIntExtra("max_pace", 0)
         minPace = intent.getIntExtra("min_pace", 0)
-        binding.maxPaceText.text = "$maxPace' 00''/km"
-        binding.minPaceText.text = "$minPace' 00''/km"
+        maxPaceMinutes = intent.getIntExtra("max_pace_minutes",0)
+        maxPaceSeconds = intent.getIntExtra("max_pace_seconds",0)
+        minPaceMinutes = intent.getIntExtra("min_pace_minutes",0)
+        minPaceSeconds = intent.getIntExtra("min_pace_seconds",0)
+        binding.maxPaceText.text = "$maxPaceMinutes' $maxPaceSeconds''/km"
+        binding.minPaceText.text = "$minPaceMinutes' $minPaceSeconds''/km"
 
         // SeekBar와 TextView 참조
         val maxVolumeSeekBar: SeekBar = binding.maxVolumeSettingSeekbar
@@ -99,6 +107,10 @@ class MaxMinVolumeSelectActivity : AppCompatActivity() {
                 val intent = Intent(this, RunninMainActivity::class.java)
                 intent.putExtra("max_pace", maxPace)
                 intent.putExtra("min_pace", minPace)
+                intent.putExtra("max_pace_minutes", maxPaceMinutes)
+                intent.putExtra("max_pace_seconds", maxPaceSeconds)
+                intent.putExtra("min_pace_minutes", minPaceMinutes)
+                intent.putExtra("min_pace_seconds", minPaceSeconds)
                 intent.putExtra("max_volume", maxVolume)
                 intent.putExtra("min_volume", minVolume)
                 startActivity(intent)
