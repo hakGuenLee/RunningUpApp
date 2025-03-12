@@ -29,12 +29,19 @@ class TimeHandler(private val callback: TimerCallback) {
     fun startTimer(){
         isTimerRunning = true
         handler.post(runnable)
+        isTimerRunning = true
+    }
+
+    fun pauseTimer() {
+        isTimerRunning = false
     }
 
     //타이머 정지 메서드
-    fun stopTimer(){
+    fun stopTimer() {
         isTimerRunning = false
-
+        handler.removeCallbacks(runnable)
+        elapsedTime = 0
+        updateTimerText()
     }
 
     // 타이머를 1초마다 업데이트하여 텍스트로 변환

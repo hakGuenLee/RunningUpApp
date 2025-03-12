@@ -21,6 +21,8 @@ class MaxPaceSelectActivity : AppCompatActivity() {
     private lateinit var secondsPicker: NumberPicker
     private var minutes: Int = 0
     private var seconds: Int = 0
+    private var minPaceMinutes: Int = 0
+    private var minPaceSeconds: Int = 0
     private var maxPace: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +32,13 @@ class MaxPaceSelectActivity : AppCompatActivity() {
         
         minutesPicker = binding.minutesPicker
         secondsPicker = binding.secondsPicker
+
+        minutes = intent.getIntExtra("max_pace_minutes", 0)
+        seconds = intent.getIntExtra("max_pace_seconds", 0)
+        minPaceMinutes = intent.getIntExtra("min_pace_minutes", 0)
+        minPaceSeconds = intent.getIntExtra("min_pace_seconds", 0)
+
+        binding.maxPaceText.text = "$minutes' $seconds''/km"
 
         //numberPicker 값 초기화
         numberPickerValueSetter()
@@ -83,13 +92,15 @@ class MaxPaceSelectActivity : AppCompatActivity() {
 
         binding.confirmBtn.setOnClickListener {
 
-            if(maxPace == 0){
+            if(minutes == 0){
                 Toast.makeText(this, "최고 페이스를 선택해 주세요!", Toast.LENGTH_SHORT).show()
             }else{
                 val intent = Intent(this, MinPaceSelectActivity::class.java)
                 intent.putExtra("max_pace", maxPace)
                 intent.putExtra("max_pace_minutes", minutes)
                 intent.putExtra("max_pace_seconds", seconds)
+                intent.putExtra("min_pace_minutes", minPaceMinutes)
+                intent.putExtra("min_pace_seconds", minPaceSeconds)
                 startActivity(intent)
                 finish()
             }

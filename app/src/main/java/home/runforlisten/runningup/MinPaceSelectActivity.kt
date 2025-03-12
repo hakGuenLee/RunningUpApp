@@ -30,7 +30,11 @@ class MinPaceSelectActivity : AppCompatActivity() {
         maxPace = intent.getIntExtra("max_pace", 0)
         maxPaceMinutes = intent.getIntExtra("max_pace_minutes",0)
         maxPaceSeconds = intent.getIntExtra("max_pace_seconds", 0)
+        minutes = intent.getIntExtra("min_pace_minutes", 0)
+        seconds = intent.getIntExtra("min_pace_seconds", 0)
+
         binding.maxPaceText.text = "$maxPaceMinutes' $maxPaceSeconds''/km"
+        binding.minPaceText.text = "$minutes' $seconds''/km"
 
 
 
@@ -86,9 +90,15 @@ class MinPaceSelectActivity : AppCompatActivity() {
 
         binding.confirmBtn.setOnClickListener {
 
-            if(minutes == 0){
+            // 총 시간을 초 단위로 변환
+            val minPaceInSeconds = minutes * 60 + seconds
+            val maxPaceInSeconds = maxPaceMinutes * 60 + maxPaceSeconds
+
+
+
+            if(minPaceInSeconds == 0){
                 Toast.makeText(this, "최소 페이스를 선택해 주세요!", Toast.LENGTH_SHORT).show()
-            }else if(minutes <= maxPaceMinutes){
+            }else if(minPaceInSeconds <= maxPaceInSeconds){
                 Toast.makeText(this, "최고 페이스보다 느린 페이스를 선택해 주세요!", Toast.LENGTH_SHORT).show()
             }else{
                 val intent = Intent(this, MaxMinVolumeSelectActivity::class.java)
@@ -108,6 +118,10 @@ class MinPaceSelectActivity : AppCompatActivity() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val intent = Intent(this@MinPaceSelectActivity, MaxPaceSelectActivity::class.java)
+                intent.putExtra("max_pace_minutes", maxPaceMinutes)
+                intent.putExtra("max_pace_seconds", maxPaceSeconds)
+                intent.putExtra("min_pace_minutes", minutes)
+                intent.putExtra("min_pace_seconds", seconds)
                 startActivity(intent)
             }
         }

@@ -137,7 +137,7 @@ class MainService: Service(), LocationListener {
                     // 이동 시간 (분)
                     val timeInMinutes = timeInSeconds / 60.0
 
-                    // 페이스 계산: 시간당 1킬로미터를 주파하는 데 걸린 시간 (분/km)
+                    // 페이스 계산: 시간당 1킬로미터를 주파하는 데 걸린 시간 (분/km)-p
                     val paceInMinutesPerKm = timeInMinutes / distanceInKm
 
                     // 페이스를 분/초로 변환

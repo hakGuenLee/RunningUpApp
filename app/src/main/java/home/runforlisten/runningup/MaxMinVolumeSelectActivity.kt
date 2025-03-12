@@ -122,6 +122,10 @@ class MaxMinVolumeSelectActivity : AppCompatActivity() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val intent = Intent(this@MaxMinVolumeSelectActivity, MinPaceSelectActivity::class.java)
+                intent.putExtra("max_pace_minutes", maxPaceMinutes)
+                intent.putExtra("max_pace_seconds", maxPaceSeconds)
+                intent.putExtra("min_pace_minutes", minPaceMinutes)
+                intent.putExtra("min_pace_seconds", minPaceSeconds)
                 startActivity(intent)
             }
         }

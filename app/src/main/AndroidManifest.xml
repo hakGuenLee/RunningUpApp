@@ -52,6 +52,9 @@
         <activity android:name=".RunninMainActivity"
             android:theme="@style/WhitePageBarTheme"
             />
+        <activity android:name=".ResultActivity"
+            android:theme="@style/WhitePageBarTheme"
+            />
         <activity android:name=".RunActivity" />
         <activity android:name=".TutorialActivity"
             android:theme="@style/TutorialPageBarTheme"
