@@ -30,11 +30,13 @@ class RunninMainActivity : AppCompatActivity(), TimeHandler.TimerCallback {
 
     private lateinit var locationManager: LocationManager
     private var lastLocation: Location? = null
-    private var previousLocation: Location? = null
     private var totalDistance: Float = 0f // 누적된 달린 거리 (미터)
     private var totalTime: Long = 0 // 총 시간 (밀리초)
+    private var startTime: Long = 0 // 시작 시간 (밀리초)
+    private var currentTime: Long = 0 // 현재 시간 (밀리초)
 
 
+    //페이스를 구하는 공식 : 이동한 총 거리(킬로미터) 분의 총 시간(초단위)를 60으로 나눔
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = RunningMainPageBinding.inflate(layoutInflater)
@@ -53,7 +55,7 @@ class RunninMainActivity : AppCompatActivity(), TimeHandler.TimerCallback {
             return
         }
 
-
+        //메인기능에 필요한 모든 값들 초기화(intent로 값을 넘겨받고 할당함)
         maxPace = intent.getIntExtra("max_pace", 0)
         minPace = intent.getIntExtra("min_pace", 0)
         maxPaceMinutes = intent.getIntExtra("max_pace_minutes",0)
@@ -73,6 +75,7 @@ class RunninMainActivity : AppCompatActivity(), TimeHandler.TimerCallback {
             if (isTimerPaused) {
                 // 타이머가 일시정지 상태일 때 -> 다시 시작
                 binding.startBtn.setImageResource(R.drawable.run_pause_background)
+                startTime = System.currentTimeMillis()
                 timeHandler!!.startTimer()
                 isTimerPaused = false
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 1f, locationListener)
@@ -101,7 +104,7 @@ class RunninMainActivity : AppCompatActivity(), TimeHandler.TimerCallback {
     override fun onTick(time: String) {
         binding.timer.text = time
         if(!isTimerPaused){
-            totalTime += 1000
+            currentTime = System.currentTimeMillis() - startTime
         }
     }
 
@@ -109,15 +112,23 @@ class RunninMainActivity : AppCompatActivity(), TimeHandler.TimerCallback {
         TODO("Not yet implemented")
     }
 
+    //GPS 기반으로 동작하는 로케이션리스너
     private val locationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
+
+            //일시 정지 상태일때는 위치업데이트 중지
+            if (isTimerPaused) return
+
+            //움직이기 시작하면 거리를 누적시키면서 업데이트해줌
             if (lastLocation != null) {
                 // 이동 거리 계산 (미터 단위)
                 val distance = lastLocation!!.distanceTo(location)
                 totalDistance += distance  // 총 거리 업데이트
             }
+            //로케이션 리스너가 제공해주는 location을 마지막 위치에 할당
             lastLocation = location  // 마지막 위치 업데이트
 
+            //실제적으로 페이스를 계산하는 함수 호출
             val pace = calculatePace()
 
 
@@ -131,27 +142,19 @@ class RunninMainActivity : AppCompatActivity(), TimeHandler.TimerCallback {
         override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
     }
 
+    //페이스를 구하는 함수
     private fun calculatePace(): String {
-        // totalDistance와 totalTime을 이용하여 페이스를 계산
-        if (totalDistance > 0 && totalTime > 0) {
-            // 1킬로미터에 대한 시간 계산 (분/킬로미터)
-            val paceInMinutesPerKm = (totalTime / 1000.0) / (totalDistance / 1000.0) / 60.0
 
-            // 페이스를 분/초로 변환
+        if (totalDistance > 0 && currentTime > 0) {
+
+            // totalDistance와 totalTime을 이용하여 페이스를 계산 > 즉 총 거리 분의 총 시간을 60으로 나눔
+            val paceInMinutesPerKm = (currentTime / 1000.0) / (totalDistance / 1000.0) / 60.0
             val minutes = paceInMinutesPerKm.toInt()
             val seconds = ((paceInMinutesPerKm - minutes) * 60).toInt()
-
             return String.format("%02d' %02d'' / km", minutes, seconds)
         }
-        return "00' 00''"  // 계산할 수 없을 때
+        return "00' 00''/km"  // 계산할 수 없을 때
     }
-
-
-
-
-
-
-
 
 
 }
