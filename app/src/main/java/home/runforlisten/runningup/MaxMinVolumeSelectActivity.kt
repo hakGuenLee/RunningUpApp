@@ -54,6 +54,10 @@ class MaxMinVolumeSelectActivity : AppCompatActivity() {
         val maxVolumeBox: CardView = binding.maxVolumeBox
         val minVolumeBox: CardView = binding.minVolumeBox
 
+        //초기값을 50으로 설정
+        maxVolume = 50
+        minVolume = 50
+
         // SeekBar 값 변경 리스너 - 최고 볼륨
         maxVolumeSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
