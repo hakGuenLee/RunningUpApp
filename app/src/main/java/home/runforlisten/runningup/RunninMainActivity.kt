@@ -86,7 +86,7 @@ class RunninMainActivity : AppCompatActivity(), TimeHandler.TimerCallback {
 //                startTime = System.currentTimeMillis()
                 timeHandler!!.startTimer()
                 isTimerPaused = false
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1500L, 0.2f, locationListener)
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1500L, 1f, locationListener)
 
             } else {
                 // 타이머가 실행 중일 때 -> 일시정지
@@ -124,38 +124,42 @@ class RunninMainActivity : AppCompatActivity(), TimeHandler.TimerCallback {
                 speedHistory.removeAt(0)  // 과거 데이터 삭제
             }
 
-
 //            lastLocation?.let {
 
-            // 평균 속도 계산(저장된 속도값 5개의 평균값. 너무 지나치고 잦은 변동을 줄이기 위해..)
-            speed = speedHistory.average().toFloat()
+            if(speedHistory.size == MAX_HISTORY_SIZE){
 
-            //속도가 0보다 클 경우, 즉 사용자가 이동하고 있을 경우 페이스 계산
-            if(speed > 0){
-                //현재 사용자의 속도라면 1km를 달리는데 얼마나 걸릴 지 알기 위해(즉 페이스) 현재 속도를 1000m로 나눔
-                val runningTimeOneKm = 1000 / speed
+                // 평균 속도 계산(저장된 속도값 5개의 평균값. 너무 지나치고 잦은 변동을 줄이기 위해..)
+                speed = speedHistory.average().toFloat()
 
-                //속도가 갑자기 0이거나 무한대로 측정될 때를 대피해서 infinite가 아닐 경우에만
-                //페이스를 추출해서 표시
-                if(runningTimeOneKm.isFinite()){
-                    //나눈 값에서 분, 초를 추출
-                    val minutes = (runningTimeOneKm / 60).toInt()
-                    val seconds = (runningTimeOneKm % 60).toInt()
+                //속도가 0보다 클 경우, 즉 사용자가 이동하고 있을 경우 페이스 계산
+                if(speed > 0){
+                    //현재 사용자의 속도라면 1km를 달리는데 얼마나 걸릴 지 알기 위해(즉 페이스) 현재 속도를 1000m로 나눔
+                    val runningTimeOneKm = 1000 / speed
 
-                    //화면에 페이스값을 표시
-                    val pace = String.format("%02d' %02d'' / km", minutes, seconds)
-                    binding.paceStatusText.text = "$pace"
-                }else{
-                    //정상적인 숫자가 아닐 경우에는 아래와 같이 표기
+                    //속도가 갑자기 0이거나 무한대로 측정될 때를 대피해서 infinite가 아닐 경우에만
+                    //페이스를 추출해서 표시
+                    if(runningTimeOneKm.isFinite()){
+                        //나눈 값에서 분, 초를 추출
+                        val minutes = (runningTimeOneKm / 60).toInt()
+                        val seconds = (runningTimeOneKm % 60).toInt()
+
+                        //화면에 페이스값을 표시
+                        val pace = String.format("%02d' %02d'' / km", minutes, seconds)
+                        binding.paceStatusText.text = "$pace"
+                    }else{
+                        //정상적인 숫자가 아닐 경우에는 아래와 같이 표기
+                        binding.paceStatusText.text = "--' --''/km"
+                    }
+                }else {
+                    //속도가 0이면 아래의 텍스트를 표시
                     binding.paceStatusText.text = "--' --''/km"
                 }
-            }else {
-                //속도가 0이면 아래의 텍스트를 표시
-                binding.paceStatusText.text = "--' --''/km"
-            }
 //            }
 
-            lastLocation = location
+                lastLocation = location
+
+
+            }
 
         }
     }
