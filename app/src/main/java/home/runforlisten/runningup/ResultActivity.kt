@@ -18,13 +18,6 @@ class ResultActivity : AppCompatActivity() {
 
         val dbHelper = DBHelper(this)
 
-
-        val pace = dbHelper.selectPaceTest()
-
-        Log.d("pace", pace)
-
-        binding.dbTestText.text = "pace_avg : $pace"
-
         binding.saveBtn.setOnClickListener {
 
             dbHelper.insertTest("db insert test!!")
