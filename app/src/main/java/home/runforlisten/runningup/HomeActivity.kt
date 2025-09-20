@@ -2,6 +2,8 @@ package home.runforlisten.runningup
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import home.runforlisten.runningup.databinding.HomePageBinding
@@ -14,7 +16,6 @@ class HomeActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = HomePageBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         //사용자가 뒤로가기 터치했을 때 앱을 완전히 종료시키는 콜백 함수
         val callback = object : OnBackPressedCallback(true) {

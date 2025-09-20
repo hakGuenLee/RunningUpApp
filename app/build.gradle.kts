@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation("androidx.viewpager2:viewpager2:1.1.0")
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)

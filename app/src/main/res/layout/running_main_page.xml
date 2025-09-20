@@ -227,8 +227,6 @@
             android:fontFamily="@font/scdream_bold"
             />
 
-
-
     </RelativeLayout>
 
 
@@ -255,7 +253,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
-
+    <TextView
+        android:id="@+id/current_speed_text"
+        android:layout_width="120dp"
+        android:layout_height="29dp"
+        android:layout_marginLeft="245dp"
+        android:text="00'00''/km"
+        android:textSize="18sp"
+        android:textColor="#ff59D286"
+        android:fontFamily="@font/scdream_bold"
+        app:layout_constraintTop_toBottomOf="@id/music_volume_status_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <!--하단 버튼 가이드라인-->
     <androidx.constraintlayout.widget.Guideline

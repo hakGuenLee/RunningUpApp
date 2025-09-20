@@ -9,6 +9,7 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import home.runforlisten.runningup.databinding.RunningMainPageBinding
@@ -29,10 +30,18 @@ class RunninMainActivity : AppCompatActivity(), TimeHandler.TimerCallback {
     private var isTimerPaused = true
 
     private lateinit var locationManager: LocationManager //GPS기반으로 동작하는 로케이션매니저
-    private var lastLocation: Location? = null // 마지막 위치 정보(location 타입의 값)
+
     private var speed = 0f // 속도 값(float)
     private var speedHistory = mutableListOf<Float>() // 속도 히스토리 저장 (평균화 용)
     private val MAX_HISTORY_SIZE = 5 // 평균을 낼 데이터의 최대 크기
+
+
+
+
+    private var lastLocation: Location? = null // 마지막 위치 정보(location 타입의 값)
+    private var totalDistance: Float = 0f   //db에 평균 pace를 넣기 위한 계산에 필요한 총 거리값
+
+    private var lastTimeString: String = "00:00:00" //계속 시간 값을 받음
 
 
 //    private var totalDistance: Float = 0f // 누적된 달린 거리 (미터)
@@ -46,6 +55,8 @@ class RunninMainActivity : AppCompatActivity(), TimeHandler.TimerCallback {
         super.onCreate(savedInstanceState)
         binding = RunningMainPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val dbHelper = DBHelper(this)
 
         //타이머 객체 생성
         timeHandler = TimeHandler(this)
@@ -79,23 +90,18 @@ class RunninMainActivity : AppCompatActivity(), TimeHandler.TimerCallback {
 
         //시작버튼 터치
         binding.startBtn.setOnClickListener {
-
             if (isTimerPaused) {
                 // 타이머가 일시정지 상태일 때 -> 다시 시작
                 binding.startBtn.setImageResource(R.drawable.run_pause_background)
-//                startTime = System.currentTimeMillis()
                 timeHandler!!.startTimer()
                 isTimerPaused = false
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1500L, 1f, locationListener)
-
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000L, 1f, locationListener)
             } else {
                 // 타이머가 실행 중일 때 -> 일시정지
-
                 binding.startBtn.setImageResource(R.drawable.run_start_icon)
                 timeHandler!!.pauseTimer()
                 isTimerPaused = true
             }
-
         }
 
         //종료 버튼 터치
@@ -103,6 +109,39 @@ class RunninMainActivity : AppCompatActivity(), TimeHandler.TimerCallback {
 
             //종료 버튼을 누르면 결과 페이지로 이동
             locationManager.removeUpdates(locationListener)
+
+            // 1. 문자열 분해
+            val parts = lastTimeString.split(":")
+            val hours = parts[0].toLong()
+            val minutes = parts[1].toLong()
+            val seconds = parts[2].toLong()
+
+            Log.d("hours", hours.toString())
+            Log.d("minutes", minutes.toString())
+            Log.d("seconds", seconds.toString())
+
+
+            val totalTimeMinutes = hours * 60 + minutes + seconds / 60.0  // Double 타입
+
+            Log.d("totalTime", totalTimeMinutes.toString())
+
+            val totalDistanceKm = totalDistance / 1000.0
+
+
+            val paceText = if (totalDistanceKm > 0) {
+                val totalPace = totalTimeMinutes / totalDistanceKm
+                val paceMinutes = totalPace.toInt()
+                val paceSeconds = ((totalPace - paceMinutes) * 60).toInt()
+                String.format("%02d:%02d/km", paceMinutes, paceSeconds) // "분:초/km"
+            } else {
+                "00:00/km" // 이동거리 없으면 기본값
+            }
+
+
+            Log.d("paceText", paceText)
+
+
+            dbHelper.insertPaceTest(paceText)
 
             val intent = Intent(this, ResultActivity::class.java)
             startActivity(intent)
@@ -112,60 +151,77 @@ class RunninMainActivity : AppCompatActivity(), TimeHandler.TimerCallback {
     }
 
     private val locationListener = object : LocationListener{
+
         override fun onLocationChanged(location: Location) {
+            if (isTimerPaused) return
 
-            //일시 정지 상태일 때는 위치 업데이트 중지
-            if(isTimerPaused) return
+            val currentSpeed = location.speed
+            val MIN_SPEED_THRESHOLD = 0.5f            // 평균 속도 기준
+            val EFFECTIVE_ZERO_THRESHOLD = 0.3f       // 사실상 멈춘 것으로 간주하는 최소 속도
 
-            // 속도 값을 5개까지 받음
-            //locationlistener가 GPS기반으로 자동적으로 거리/시간을 측정해서 실시간으로 계산하는 속도값을 얻음(speed)
-            speedHistory.add(location.speed)
-            if (speedHistory.size > MAX_HISTORY_SIZE) {
-                speedHistory.removeAt(0)  // 과거 데이터 삭제
+
+            // 이전 위치가 있으면 거리 계산 (총 거리 정보를 알기 위해 누적시키기)
+            lastLocation?.let { prev ->
+                val distance = prev.distanceTo(location)  // 두 지점 사이 거리 (미터)
+                if (distance > 1) { // 너무 작은 값(측정 오차) 제거
+                    totalDistance += distance
+                }
             }
 
-//            lastLocation?.let {
+            // 현재 위치를 lastLocation에 저장
+            lastLocation = location
 
-            if(speedHistory.size == MAX_HISTORY_SIZE){
+            // ------------------------
+            // 1. 사실상 멈춘 상태라면: speedHistory를 0으로 채워버리기
+            // ------------------------
+            if (currentSpeed < EFFECTIVE_ZERO_THRESHOLD) {
+                speedHistory.clear()
+                repeat(MAX_HISTORY_SIZE) {
+                    speedHistory.add(0f)
+                }
+            } else {
+                // 움직이는 중이면 기존대로 speedHistory에 추가
+                speedHistory.add(currentSpeed)
+                if (speedHistory.size > MAX_HISTORY_SIZE) {
+                    speedHistory.removeAt(0)
+                }
+            }
 
-                // 평균 속도 계산(저장된 속도값 5개의 평균값. 너무 지나치고 잦은 변동을 줄이기 위해..)
-                speed = speedHistory.average().toFloat()
+            // ------------------------
+            // 2. 평균 속도 기반 페이스 계산
+            // ------------------------
+            if (speedHistory.size == MAX_HISTORY_SIZE) {
+                val avgSpeed = speedHistory.average().toFloat()
 
-                //속도가 0보다 클 경우, 즉 사용자가 이동하고 있을 경우 페이스 계산
-                if(speed > 0){
-                    //현재 사용자의 속도라면 1km를 달리는데 얼마나 걸릴 지 알기 위해(즉 페이스) 현재 속도를 1000m로 나눔
-                    val runningTimeOneKm = 1000 / speed
-
-                    //속도가 갑자기 0이거나 무한대로 측정될 때를 대피해서 infinite가 아닐 경우에만
-                    //페이스를 추출해서 표시
-                    if(runningTimeOneKm.isFinite()){
-                        //나눈 값에서 분, 초를 추출
+                if (avgSpeed < MIN_SPEED_THRESHOLD) {
+                    // 평균 속도가 기준치보다 낮으면 멈춘 것으로 간주
+                    binding.paceStatusText.text = "--' --''/km"
+                } else {
+                    // 정상 이동 중 → pace 계산
+                    val runningTimeOneKm = 1000 / avgSpeed
+                    if (runningTimeOneKm.isFinite()) {
                         val minutes = (runningTimeOneKm / 60).toInt()
                         val seconds = (runningTimeOneKm % 60).toInt()
-
-                        //화면에 페이스값을 표시
                         val pace = String.format("%02d' %02d'' / km", minutes, seconds)
-                        binding.paceStatusText.text = "$pace"
-                    }else{
-                        //정상적인 숫자가 아닐 경우에는 아래와 같이 표기
+                        binding.paceStatusText.text = pace
+                    } else {
                         binding.paceStatusText.text = "--' --''/km"
                     }
-                }else {
-                    //속도가 0이면 아래의 텍스트를 표시
-                    binding.paceStatusText.text = "--' --''/km"
                 }
-//            }
-
-                lastLocation = location
-
-
             }
 
+            // ------------------------
+            // 3. (선택) 현재 속도 텍스트 표시 (디버그용)
+            // ------------------------
+            binding.currentSpeedText.text = String.format("%.2f m/s", currentSpeed)
         }
+
+
     }
 
     override fun onTick(time: String) {
         binding.timer.text = time
+        lastTimeString = time
     }
 
     override fun onTimerStop() {

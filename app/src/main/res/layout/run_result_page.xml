@@ -31,6 +31,57 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/running_time_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.21" />
+
+    <TextView
+        android:id="@+id/timeText"
+        android:layout_width="182dp"
+        android:layout_height="152dp"
+        android:text=" "
+        android:textSize="15sp"
+        android:textColor="#ff000000"
+        android:textFontWeight="300"
+        android:fontFamily="@font/pyeongchangpeace_light"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/running_time_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/test_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.38" />
+
+
+
+    <TextView
+        android:id="@+id/dbTestText"
+        android:layout_width="182dp"
+        android:layout_height="152dp"
+        android:text="pace avg : "
+        android:textSize="15sp"
+        android:textColor="#ff000000"
+        android:textFontWeight="300"
+        android:fontFamily="@font/pyeongchangpeace_light"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/test_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/runBtn_line"

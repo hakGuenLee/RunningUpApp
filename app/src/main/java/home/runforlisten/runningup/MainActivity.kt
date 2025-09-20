@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -37,6 +38,12 @@ class MainActivity : AppCompatActivity() {
 
         // 권한 상태 확인
         checkPermissions()
+
+
+        val dbHelper = DBHelper(this)
+        val db = dbHelper.writableDatabase
+
+
     }
 
     private fun checkPermissions() {
